@@ -150,9 +150,9 @@ class TextToSpeechClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
-                        yield _chunk
-                    return
+                    audio_data = b''.join(chunk for chunk in _response.iter_bytes())
+                    request_id = _response.headers.get("request-id")
+                    return audio_data, request_id
                 _response.read()
                 if _response.status_code == 422:
                     raise UnprocessableEntityError(
