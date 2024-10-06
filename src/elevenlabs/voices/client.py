@@ -389,6 +389,7 @@ class VoicesClient:
         files: typing.List[core.File],
         description: typing.Optional[str] = None,
         labels: typing.Optional[str] = None,
+        remove_background_noise: typing.Optional[bool] = False,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceResponseModel:
         """
@@ -434,6 +435,7 @@ class VoicesClient:
                 "name": name,
                 "description": description,
                 "labels": labels,
+                "remove_background_noise": remove_background_noise
             },
             files={
                 "files": files,
