@@ -288,11 +288,13 @@ class TextToSpeechClient:
         )
         try:
             if 200 <= _response.status_code < 300:
+                json_object = _response.json()
+                json_object["request_id"] = _response.headers.get("request-id")
                 return typing.cast(
                     typing.Optional[typing.Any],
                     construct_type(
                         type_=typing.Optional[typing.Any],  # type: ignore
-                        object_=_response.json(),
+                        object_=json_object,
                     ),
                 )
             if _response.status_code == 422:
