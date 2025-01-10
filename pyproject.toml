@@ -1,3 +1,6 @@
+[project]
+name = "elevenlabs"
+
 [tool.poetry]
 name = "elevenlabs"
 version = "1.50.3"
