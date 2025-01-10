@@ -10,6 +10,8 @@ from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .. import core
+from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
+from .types.projects_add_request_fiction import ProjectsAddRequestFiction
 from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
@@ -86,15 +88,24 @@ class ProjectsClient:
         default_title_voice_id: str,
         default_paragraph_voice_id: str,
         default_model_id: str,
-        from_url: typing.Optional[str] = None,
-        from_document: typing.Optional[core.File] = None,
-        quality_preset: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
-        author: typing.Optional[str] = None,
-        isbn_number: typing.Optional[str] = None,
-        acx_volume_normalization: typing.Optional[bool] = None,
-        volume_normalization: typing.Optional[bool] = None,
-        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
+        from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
+        quality_preset: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        author: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        genres: typing.Optional[typing.List[str]] = OMIT,
+        target_audience: typing.Optional[ProjectsAddRequestTargetAudience] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        original_publication_date: typing.Optional[str] = OMIT,
+        mature_content: typing.Optional[bool] = OMIT,
+        isbn_number: typing.Optional[str] = OMIT,
+        acx_volume_normalization: typing.Optional[bool] = OMIT,
+        volume_normalization: typing.Optional[bool] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
+        fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -123,9 +134,9 @@ class ProjectsClient:
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
             standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
 
         title : typing.Optional[str]
@@ -133,6 +144,27 @@ class ProjectsClient:
 
         author : typing.Optional[str]
             An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        description : typing.Optional[str]
+            An optional description of the project.
+
+        genres : typing.Optional[typing.List[str]]
+            An optional list of genres associated with the project.
+
+        target_audience : typing.Optional[ProjectsAddRequestTargetAudience]
+            An optional target audience of the project.
+
+        language : typing.Optional[str]
+            An optional language of the project. Two-letter language code (ISO 639-1).
+
+        content_type : typing.Optional[str]
+            An optional content type of the project.
+
+        original_publication_date : typing.Optional[str]
+            An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+
+        mature_content : typing.Optional[bool]
+            An optional mature content of the project.
 
         isbn_number : typing.Optional[str]
             An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
@@ -145,6 +177,12 @@ class ProjectsClient:
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+
+        fiction : typing.Optional[ProjectsAddRequestFiction]
+            An optional fiction of the project.
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -180,10 +218,19 @@ class ProjectsClient:
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
+                "description": description,
+                "genres": genres,
+                "target_audience": target_audience,
+                "language": language,
+                "content_type": content_type,
+                "original_publication_date": original_publication_date,
+                "mature_content": mature_content,
                 "isbn_number": isbn_number,
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "fiction": fiction,
+                "quality_check_on": quality_check_on,
             },
             files={
                 "from_document": from_document,
@@ -285,6 +332,7 @@ class ProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -315,6 +363,9 @@ class ProjectsClient:
 
         volume_normalization : typing.Optional[bool]
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -349,6 +400,10 @@ class ProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
+                "quality_check_on": quality_check_on,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -577,25 +632,12 @@ class ProjectsClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.stream_audio(
-            project_id="string",
-            project_snapshot_id="string",
-            convert_to_mpeg=True,
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
@@ -603,12 +645,16 @@ class ProjectsClient:
             json={
                 "convert_to_mpeg": convert_to_mpeg,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -736,6 +782,9 @@ class ProjectsClient:
                     direction="write",
                 ),
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -835,15 +884,24 @@ class AsyncProjectsClient:
         default_title_voice_id: str,
         default_paragraph_voice_id: str,
         default_model_id: str,
-        from_url: typing.Optional[str] = None,
-        from_document: typing.Optional[core.File] = None,
-        quality_preset: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
-        author: typing.Optional[str] = None,
-        isbn_number: typing.Optional[str] = None,
-        acx_volume_normalization: typing.Optional[bool] = None,
-        volume_normalization: typing.Optional[bool] = None,
-        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = None,
+        from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
+        quality_preset: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        author: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        genres: typing.Optional[typing.List[str]] = OMIT,
+        target_audience: typing.Optional[ProjectsAddRequestTargetAudience] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        content_type: typing.Optional[str] = OMIT,
+        original_publication_date: typing.Optional[str] = OMIT,
+        mature_content: typing.Optional[bool] = OMIT,
+        isbn_number: typing.Optional[str] = OMIT,
+        acx_volume_normalization: typing.Optional[bool] = OMIT,
+        volume_normalization: typing.Optional[bool] = OMIT,
+        pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
+        fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -872,9 +930,9 @@ class AsyncProjectsClient:
         quality_preset : typing.Optional[str]
             Output quality of the generated audio. Must be one of:
             standard - standard output format, 128kbps with 44.1kHz sample rate.
-            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
 
         title : typing.Optional[str]
@@ -882,6 +940,27 @@ class AsyncProjectsClient:
 
         author : typing.Optional[str]
             An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+
+        description : typing.Optional[str]
+            An optional description of the project.
+
+        genres : typing.Optional[typing.List[str]]
+            An optional list of genres associated with the project.
+
+        target_audience : typing.Optional[ProjectsAddRequestTargetAudience]
+            An optional target audience of the project.
+
+        language : typing.Optional[str]
+            An optional language of the project. Two-letter language code (ISO 639-1).
+
+        content_type : typing.Optional[str]
+            An optional content type of the project.
+
+        original_publication_date : typing.Optional[str]
+            An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+
+        mature_content : typing.Optional[bool]
+            An optional mature content of the project.
 
         isbn_number : typing.Optional[str]
             An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
@@ -894,6 +973,12 @@ class AsyncProjectsClient:
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
             A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+
+        fiction : typing.Optional[ProjectsAddRequestFiction]
+            An optional fiction of the project.
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -937,10 +1022,19 @@ class AsyncProjectsClient:
                 "quality_preset": quality_preset,
                 "title": title,
                 "author": author,
+                "description": description,
+                "genres": genres,
+                "target_audience": target_audience,
+                "language": language,
+                "content_type": content_type,
+                "original_publication_date": original_publication_date,
+                "mature_content": mature_content,
                 "isbn_number": isbn_number,
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "fiction": fiction,
+                "quality_check_on": quality_check_on,
             },
             files={
                 "from_document": from_document,
@@ -1050,6 +1144,7 @@ class AsyncProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
+        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -1080,6 +1175,9 @@ class AsyncProjectsClient:
 
         volume_normalization : typing.Optional[bool]
             When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+
+        quality_check_on : typing.Optional[bool]
+            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1122,6 +1220,10 @@ class AsyncProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
+                "quality_check_on": quality_check_on,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -1374,33 +1476,12 @@ class AsyncProjectsClient:
             Whether to convert the audio to mpeg format.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.stream_audio(
-                project_id="string",
-                project_snapshot_id="string",
-                convert_to_mpeg=True,
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
@@ -1408,12 +1489,16 @@ class AsyncProjectsClient:
             json={
                 "convert_to_mpeg": convert_to_mpeg,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -1556,6 +1641,9 @@ class AsyncProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

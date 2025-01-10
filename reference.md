@@ -32,10 +32,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.history.get_all(
-    page_size=1,
-    voice_id="pMsXgVXv3BLzUgSXRplE",
-)
+client.history.get_all()
 
 ```
 </dd>
@@ -68,6 +65,22 @@ client.history.get_all(
 <dd>
 
 **voice_id:** `typing.Optional[str]` — Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — search term used for filtering
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `typing.Optional[HistoryGetAllRequestSource]` — Source of the generated history item
     
 </dd>
 </dl>
@@ -120,7 +133,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.history.get(
-    history_item_id="ja9xsmfGhxYcymxGcOGB",
+    history_item_id="HISTORY_ITEM_ID",
 )
 
 ```
@@ -190,7 +203,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.history.delete(
-    history_item_id="ja9xsmfGhxYcymxGcOGB",
+    history_item_id="HISTORY_ITEM_ID",
 )
 
 ```
@@ -260,7 +273,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.history.get_audio(
-    history_item_id="ja9xsmfGhxYcymxGcOGB",
+    history_item_id="HISTORY_ITEM_ID",
 )
 
 ```
@@ -285,7 +298,7 @@ client.history.get_audio(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -330,7 +343,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.history.download(
-    history_item_ids=["ja9xsmfGhxYcymxGcOGB"],
+    history_item_ids=["HISTORY_ITEM_ID"],
 )
 
 ```
@@ -409,9 +422,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_sound_effects.convert(
-    text="string",
-    duration_seconds=1.1,
-    prompt_influence=1.1,
+    text="Spacious braam suitable for high-impact movie trailer moments",
 )
 
 ```
@@ -452,7 +463,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -465,147 +476,7 @@ client.text_to_sound_effects.convert(
 </details>
 
 ## AudioIsolation
-<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">audio_isolation</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Removes background noise from audio
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.audio_isolation.audio_isolation()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">audio_isolation_stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Removes background noise from audio and streams the result
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.audio_isolation.audio_isolation_stream()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Samples
+## samples
 <details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
@@ -639,8 +510,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.samples.delete(
-    voice_id="ja9xsmfGhxYcymxGcOGB",
-    sample_id="pMsXgVXv3BLzUgSXRplE",
+    voice_id="VOICE_ID",
+    sample_id="SAMPLE_ID",
 )
 
 ```
@@ -718,8 +589,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.samples.get_audio(
-    voice_id="ja9xsmfGhxYcymxGcOGB",
-    sample_id="pMsXgVXv3BLzUgSXRplE",
+    voice_id="VOICE_ID",
+    sample_id="SAMPLE_ID",
 )
 
 ```
@@ -752,7 +623,7 @@ client.samples.get_audio(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -792,21 +663,16 @@ Converts text into speech using a voice of your choice and returns audio.
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, VoiceSettings
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert(
-    voice_id="pMsXgVXv3BLzUgSXRplE",
-    optimize_streaming_latency="0",
-    output_format="mp3_22050_32",
-    text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-    voice_settings=VoiceSettings(
-        stability=0.1,
-        similarity_boost=0.3,
-        style=0.2,
-    ),
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    text="The first move is what sets everything in motion.",
+    model_id="eleven_multilingual_v2",
 )
 
 ```
@@ -847,7 +713,16 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -895,7 +770,7 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -935,7 +810,23 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -980,8 +871,10 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert_with_timestamps(
-    voice_id="21m00Tcm4TlvDq8ikWAM",
-    text="text",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    text="The first move is what sets everything in motion.",
+    model_id="eleven_multilingual_v2",
 )
 
 ```
@@ -1022,7 +915,16 @@ client.text_to_speech.convert_with_timestamps(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -1070,7 +972,7 @@ client.text_to_speech.convert_with_timestamps(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1103,6 +1005,24 @@ client.text_to_speech.convert_with_timestamps(
 <dd>
 
 **next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[
+    BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
     
 </dd>
 </dl>
@@ -1149,21 +1069,16 @@ Converts text into speech using a voice of your choice and returns audio as an a
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, VoiceSettings
+from elevenlabs import ElevenLabs
 
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert_as_stream(
-    voice_id="pMsXgVXv3BLzUgSXRplE",
-    optimize_streaming_latency="0",
-    output_format="mp3_22050_32",
-    text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-    voice_settings=VoiceSettings(
-        stability=0.1,
-        similarity_boost=0.3,
-        style=0.2,
-    ),
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    text="The first move is what sets everything in motion.",
+    model_id="eleven_multilingual_v2",
 )
 
 ```
@@ -1204,7 +1119,16 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -1252,7 +1176,7 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1292,7 +1216,25 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[
+    BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -1336,10 +1278,14 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.text_to_speech.stream_with_timestamps(
-    voice_id="21m00Tcm4TlvDq8ikWAM",
-    text="text",
+response = client.text_to_speech.stream_with_timestamps(
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    text="The first move is what sets everything in motion.",
+    model_id="eleven_multilingual_v2",
 )
+for chunk in response:
+    yield chunk
 
 ```
 </dd>
@@ -1379,7 +1325,16 @@ client.text_to_speech.stream_with_timestamps(
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -1427,7 +1382,7 @@ client.text_to_speech.stream_with_timestamps(
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1460,6 +1415,24 @@ client.text_to_speech.stream_with_timestamps(
 <dd>
 
 **next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[
+    BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
+]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
     
 </dd>
 </dl>
@@ -1513,10 +1486,9 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.speech_to_speech.convert(
-    voice_id="string",
-    enable_logging=True,
-    optimize_streaming_latency="0",
-    output_format="mp3_22050_32",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    model_id="eleven_multilingual_sts_v2",
 )
 
 ```
@@ -1559,7 +1531,16 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -1591,7 +1572,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1599,7 +1580,15 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -1644,10 +1633,9 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.speech_to_speech.convert_as_stream(
-    voice_id="string",
-    enable_logging="0",
-    optimize_streaming_latency="mp3_22050_32",
-    output_format="string",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    output_format="mp3_44100_128",
+    model_id="eleven_multilingual_sts_v2",
 )
 
 ```
@@ -1682,7 +1670,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[OptimizeStreamingLatency]` — You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1690,7 +1678,16 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**optimize_streaming_latency:** `typing.Optional[OutputFormat]` — The output format of the generated audio.
+**optimize_streaming_latency:** `typing.Optional[int]` 
+
+You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+0 - default mode (no latency optimizations)
+1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+3 - max latency optimizations
+4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+Defaults to None.
     
 </dd>
 </dl>
@@ -1698,20 +1695,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[str]` 
-
-Output format of the generated audio. Must be one of:
-mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
-mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
-mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
-mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
-mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
-mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
-pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
-pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
-pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
-pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
-ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[OutputFormat]` — The output format of the generated audio.
     
 </dd>
 </dl>
@@ -1735,7 +1719,7 @@ ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law
 <dl>
 <dd>
 
-**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+**seed:** `typing.Optional[int]` — If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
     
 </dd>
 </dl>
@@ -1743,7 +1727,15 @@ ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove the background noise from your audio input using our audio isolation model. Only applies to Voice Changer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -1878,7 +1870,7 @@ client.voice_generation.generate(
 <dl>
 <dd>
 
-**accent:** `str` — Category code corresponding to the accent of the generated voice. Possible values: american, british, african, australian, indian.
+**accent:** `str` — Category code corresponding to the accent of the generated voice. Possible values: british, american, african, australian, indian.
     
 </dd>
 </dl>
@@ -1910,7 +1902,7 @@ client.voice_generation.generate(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
     
 </dd>
 </dl>
@@ -1998,7 +1990,228 @@ client.voice_generation.create_a_previously_generated_voice(
 <dl>
 <dd>
 
+**played_not_selected_voice_ids:** `typing.Optional[typing.Sequence[str]]` — List of voice ids that the user has played but not selected. Used for RLHF.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **labels:** `typing.Optional[typing.Dict[str, str]]` — Optional, metadata to add to the created voice. Defaults to None.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## TextToVoice
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create_previews</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate a custom voice based on voice description. This method returns a list of voice previews. Each preview has a generated_voice_id and a sample of the voice as base64 encoded mp3 audio. If you like the a voice previewand want to create the voice call /v1/text-to-voice/create-voice-from-preview with the generated_voice_id to create the voice.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.text_to_voice.create_previews(
+    voice_description="A sassy little squeaky mouse",
+    text="Every act of kindness, no matter how small, carries value and can make a difference, as no gesture of goodwill is ever wasted.",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_description:** `str` — Description to use for the created voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `str` — Text to generate, text length has to be between 100 and 1000.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[TextToVoiceCreatePreviewsRequestOutputFormat]` 
+
+Output format of the generated audio. Must be one of:
+mp3_22050_32 - output format, mp3 with 22.05kHz sample rate at 32kbps.
+mp3_44100_32 - output format, mp3 with 44.1kHz sample rate at 32kbps.
+mp3_44100_64 - output format, mp3 with 44.1kHz sample rate at 64kbps.
+mp3_44100_96 - output format, mp3 with 44.1kHz sample rate at 96kbps.
+mp3_44100_128 - default output format, mp3 with 44.1kHz sample rate at 128kbps.
+mp3_44100_192 - output format, mp3 with 44.1kHz sample rate at 192kbps. Requires you to be subscribed to Creator tier or above.
+pcm_16000 - PCM format (S16LE) with 16kHz sample rate.
+pcm_22050 - PCM format (S16LE) with 22.05kHz sample rate.
+pcm_24000 - PCM format (S16LE) with 24kHz sample rate.
+pcm_44100 - PCM format (S16LE) with 44.1kHz sample rate. Requires you to be subscribed to Pro tier or above.
+ulaw_8000 - μ-law format (sometimes written mu-law, often approximated as u-law) with 8kHz sample rate. Note that this format is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_generate_text:** `typing.Optional[bool]` — Whether to automatically generate a text suitable for the voice description.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create_voice_from_preview</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a voice from previously generated voice preview. This endpoint should be called after you fetched a generated_voice_id using /v1/text-to-voice/create-previews.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.text_to_voice.create_voice_from_preview(
+    voice_name="Little squeaky mouse",
+    voice_description="A sassy little squeaky mouse",
+    generated_voice_id="37HceQefKmEi3bGovXjL",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_name:** `str` — Name to use for the created voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_description:** `str` — Description to use for the created voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**generated_voice_id:** `str` — The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[typing.Dict[str, str]]` — Optional, metadata to add to the created voice. Defaults to None.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**played_not_selected_voice_ids:** `typing.Optional[typing.Sequence[str]]` — List of voice ids that the user has played but not selected. Used for RLHF.
     
 </dd>
 </dl>
@@ -2301,7 +2514,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.get_settings(
-    voice_id="2EiwWnXFnvU5JabPnv8n",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
 )
 
 ```
@@ -2371,7 +2584,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.get(
-    voice_id="29vD33N1CtxCmqQRPOHJ",
+    voice_id="JBFqnCBsd6RMkjVDRZzb",
 )
 
 ```
@@ -2449,7 +2662,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.delete(
-    voice_id="29vD33N1CtxCmqQRPOHJ",
+    voice_id="VOICE_ID",
 )
 
 ```
@@ -2519,7 +2732,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.edit_settings(
-    voice_id="29vD33N1CtxCmqQRPOHJ",
+    voice_id="VOICE_ID",
     request=VoiceSettings(
         stability=0.1,
         similarity_boost=0.3,
@@ -2637,6 +2850,14 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **description:** `typing.Optional[str]` — How would you describe the voice?
     
 </dd>
@@ -2698,7 +2919,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.voices.edit(
-    voice_id="JBFqnCBsd6RMkjVDRZzb",
+    voice_id="VOICE_ID",
     name="George",
 )
 
@@ -2735,6 +2956,14 @@ client.voices.edit(
 **files:** `from __future__ import annotations
 
 typing.Optional[typing.List[core.File]]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
     
 </dd>
 </dl>
@@ -2839,14 +3068,6 @@ client.voices.add_sharing_voice(
 <dd>
 
 **new_name:** `str` — The name that identifies this voice. This will be displayed in the dropdown of the website.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**xi_app_check_token:** `typing.Optional[str]` — Your app check token.
     
 </dd>
 </dl>
@@ -3198,7 +3419,7 @@ client.voices.get_a_profile_page(
 </dl>
 </details>
 
-## Projects
+## projects
 <details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_all</a>()</code></summary>
 <dl>
 <dd>
@@ -3366,9 +3587,9 @@ typing.Optional[core.File]` — See core.File for more documentation
 
 Output quality of the generated audio. Must be one of:
 standard - standard output format, 128kbps with 44.1kHz sample rate.
-high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the character cost by 20%.
-ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the character cost by 50%.
-ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the character cost by 100%.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
 
     
 </dd>
@@ -3386,6 +3607,62 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dd>
 
 **author:** `typing.Optional[str]` — An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — An optional description of the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**genres:** `typing.Optional[typing.List[str]]` — An optional list of genres associated with the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_audience:** `typing.Optional[ProjectsAddRequestTargetAudience]` — An optional target audience of the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — An optional language of the project. Two-letter language code (ISO 639-1).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content_type:** `typing.Optional[str]` — An optional content type of the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**original_publication_date:** `typing.Optional[str]` — An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mature_content:** `typing.Optional[bool]` — An optional mature content of the project.
     
 </dd>
 </dl>
@@ -3418,6 +3695,22 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dd>
 
 **pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fiction:** `typing.Optional[ProjectsAddRequestFiction]` — An optional fiction of the project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
     
 </dd>
 </dl>
@@ -3617,6 +3910,14 @@ client.projects.edit_basic_project_info(
 <dd>
 
 **volume_normalization:** `typing.Optional[bool]` — When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
     
 </dd>
 </dl>
@@ -3827,94 +4128,6 @@ client.projects.get_snapshots(
 <dd>
 
 **project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">stream_audio</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stream the audio from a project snapshot.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.projects.stream_audio(
-    project_id="string",
-    project_snapshot_id="string",
-    convert_to_mpeg=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project_snapshot_id:** `str` — The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
     
 </dd>
 </dl>
@@ -4326,6 +4539,93 @@ client.chapters.delete(
 </dl>
 </details>
 
+<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new chapter either as blank or from a URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.chapters.create(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">convert</a>(...)</code></summary>
 <dl>
 <dd>
@@ -4713,6 +5013,22 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
+**drop_background_audio:** `typing.Optional[bool]` — An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_profanity_filter:** `typing.Optional[bool]` — [BETA] Whether transcripts should have profanities censored with the words '[censored]'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -4865,85 +5181,6 @@ client.dubbing.delete_dubbing_project(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get_dubbed_file</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns dubbed file as a streamed file. Videos will be returned in MP4 format and audio only dubs will be returned in MP3.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.dubbing.get_dubbed_file(
-    dubbing_id="string",
-    language_code="string",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language_code:** `str` — ID of the language.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get_transcript_for_dub</a>(...)</code></summary>
 <dl>
 <dd>
@@ -5011,9 +5248,7 @@ client.dubbing.get_transcript_for_dub(
 <dl>
 <dd>
 
-**format_type:** `typing.Optional[
-    GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-]` — Format to use for the subtitle file, either 'srt' or 'webvtt'
+**format_type:** `typing.Optional[DubbingGetTranscriptForDubRequestFormatType]` — Format to use for the subtitle file, either 'srt' or 'webvtt'
     
 </dd>
 </dl>
@@ -5033,7 +5268,7 @@ client.dubbing.get_transcript_for_dub(
 </dl>
 </details>
 
-## Models
+## models
 <details><summary><code>client.models.<a href="src/elevenlabs/models/client.py">get_all</a>()</code></summary>
 <dl>
 <dd>
@@ -5268,7 +5503,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-Returns the characters usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type "voice" will return the usage of each voice along the time axis.
+Returns the credit usage metrics for the current user or the entire workspace they are part of. The response will return a time axis with unix timestamps for each day and daily usage along that axis. The usage will be broken down by the specified breakdown type. For example, breakdown type "voice" will return the usage of each voice along the time axis.
 </dd>
 </dl>
 </dd>
@@ -5331,7 +5566,7 @@ client.usage.get_characters_usage_metrics(
 <dl>
 <dd>
 
-**breakdown_type:** `typing.Optional[UsageGetCharactersUsageMetricsRequestBreakdownType]` — How to break down the information. Cannot be "user" if include_workspace_metrics is False.
+**breakdown_type:** `typing.Optional[BreakdownTypes]` — How to break down the information. Cannot be "user" if include_workspace_metrics is False.
     
 </dd>
 </dl>
@@ -5448,7 +5683,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">add_rules_to_the_pronunciation_dictionary</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">add_rules</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5483,7 +5718,7 @@ from elevenlabs.pronunciation_dictionary import (
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
+client.pronunciation_dictionary.add_rules(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
         PronunciationDictionaryRule_Phoneme(
@@ -5540,7 +5775,7 @@ List of pronunciation rules. Rule can be either:
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">remove_rules_from_the_pronunciation_dictionary</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionary.<a href="src/elevenlabs/pronunciation_dictionary/client.py">remove_rules</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5572,7 +5807,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.pronunciation_dictionary.remove_rules_from_the_pronunciation_dictionary(
+client.pronunciation_dictionary.remove_rules(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rule_strings=["rule_strings"],
 )
@@ -6057,6 +6292,1734 @@ client.workspace.update_member(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_signed_url</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a signed url to start a conversation with an agent with an agent that requires authorization
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_signed_url(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an agent from a config object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ConversationalConfig, ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_agent(
+    conversation_config=ConversationalConfig(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_config:** `ConversationalConfig` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[AgentPlatformSettings]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve config for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agent(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_agent(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_agent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Patches an Agent settings
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_agent(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_config:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secrets:** `typing.Optional[
+    typing.Sequence[
+        BodyPatchesAnAgentSettingsV1ConvaiAgentsAgentIdPatchSecretsItem
+    ]
+]` — A list of secrets for the agent. Can be used to add new secrets or update and delete the existing ones
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_widget</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the widget configuration for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agent_widget(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_link</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the current link used to share the agent with others
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agent_link(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">post_agent_avatar</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sets the avatar for an agent displayed in the widget
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.post_agent_avatar(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar_file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_knowledge_base_document_by_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific documentation making up the agent's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agent_knowledge_base_document_by_id(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the agent's knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_agent_secret</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_agent_secret(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+    name="name",
+    secret_value="secret_value",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — A name to help identify a particular agent secret
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**secret_value:** `str` — A value to be encrypted and used by the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_agent_knowledge_base</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_to_agent_knowledge_base(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agents</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a page of your agents and their metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_agents()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Agents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search by agents name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversations</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all conversations of agents that user owns. With option to restrict to a specific agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_conversations(
+    agent_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — The id of the agent you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_successful:** `typing.Optional[EvaluationSuccessResult]` — The result of the success evaluation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many conversations to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the details of a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_conversation(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_conversation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_conversation(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_conversation_audio</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the audio recording of a particular conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_conversation_audio(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">post_conversation_feedback</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send the feedback for the given conversation
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.post_conversation_feedback(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+    feedback="like",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**feedback:** `UserFeedbackScore` — Either 'like' or 'dislike' to indicate the feedback for the conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import Phone Number from Twilio configuration
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_phone_number(
+    phone_number="phone_number",
+    label="label",
+    sid="sid",
+    token="token",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number:** `str` — Phone number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `str` — Label for the phone number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sid:** `str` — Twilio Account SID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `str` — Twilio Token
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve Phone Number details by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_phone_number(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Phone Number by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_phone_number(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_phone_number</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update Phone Number details by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_phone_number(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_phone_numbers</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all Phone Numbers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_phone_numbers()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>

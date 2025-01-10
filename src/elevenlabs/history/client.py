@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .types.history_get_all_request_source import HistoryGetAllRequestSource
 from ..core.request_options import RequestOptions
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..core.unchecked_base_model import construct_type
@@ -27,6 +28,8 @@ class HistoryClient:
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        source: typing.Optional[HistoryGetAllRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -43,6 +46,12 @@ class HistoryClient:
         voice_id : typing.Optional[str]
             Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
 
+        search : typing.Optional[str]
+            search term used for filtering
+
+        source : typing.Optional[HistoryGetAllRequestSource]
+            Source of the generated history item
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -58,10 +67,7 @@ class HistoryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.history.get_all(
-            page_size=1,
-            voice_id="pMsXgVXv3BLzUgSXRplE",
-        )
+        client.history.get_all()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/history",
@@ -70,6 +76,8 @@ class HistoryClient:
                 "page_size": page_size,
                 "start_after_history_item_id": start_after_history_item_id,
                 "voice_id": voice_id,
+                "search": search,
+                "source": source,
             },
             request_options=request_options,
         )
@@ -124,7 +132,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get(
-            history_item_id="ja9xsmfGhxYcymxGcOGB",
+            history_item_id="HISTORY_ITEM_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -183,7 +191,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.delete(
-            history_item_id="ja9xsmfGhxYcymxGcOGB",
+            history_item_id="HISTORY_ITEM_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -227,7 +235,7 @@ class HistoryClient:
             History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -242,7 +250,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.get_audio(
-            history_item_id="ja9xsmfGhxYcymxGcOGB",
+            history_item_id="HISTORY_ITEM_ID",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -252,7 +260,8 @@ class HistoryClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -304,7 +313,7 @@ class HistoryClient:
             api_key="YOUR_API_KEY",
         )
         client.history.download(
-            history_item_ids=["ja9xsmfGhxYcymxGcOGB"],
+            history_item_ids=["HISTORY_ITEM_ID"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -313,6 +322,9 @@ class HistoryClient:
             json={
                 "history_item_ids": history_item_ids,
                 "output_format": output_format,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -346,6 +358,8 @@ class AsyncHistoryClient:
         page_size: typing.Optional[int] = None,
         start_after_history_item_id: typing.Optional[str] = None,
         voice_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
+        source: typing.Optional[HistoryGetAllRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -361,6 +375,12 @@ class AsyncHistoryClient:
 
         voice_id : typing.Optional[str]
             Voice ID to be filtered for, you can use GET https://api.elevenlabs.io/v1/voices to receive a list of voices and their IDs.
+
+        search : typing.Optional[str]
+            search term used for filtering
+
+        source : typing.Optional[HistoryGetAllRequestSource]
+            Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -382,10 +402,7 @@ class AsyncHistoryClient:
 
 
         async def main() -> None:
-            await client.history.get_all(
-                page_size=1,
-                voice_id="pMsXgVXv3BLzUgSXRplE",
-            )
+            await client.history.get_all()
 
 
         asyncio.run(main())
@@ -397,6 +414,8 @@ class AsyncHistoryClient:
                 "page_size": page_size,
                 "start_after_history_item_id": start_after_history_item_id,
                 "voice_id": voice_id,
+                "search": search,
+                "source": source,
             },
             request_options=request_options,
         )
@@ -456,7 +475,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.get(
-                history_item_id="ja9xsmfGhxYcymxGcOGB",
+                history_item_id="HISTORY_ITEM_ID",
             )
 
 
@@ -523,7 +542,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.delete(
-                history_item_id="ja9xsmfGhxYcymxGcOGB",
+                history_item_id="HISTORY_ITEM_ID",
             )
 
 
@@ -570,7 +589,7 @@ class AsyncHistoryClient:
             History item ID to be used, you can use GET https://api.elevenlabs.io/v1/history to receive a list of history items and their IDs.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -590,7 +609,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.get_audio(
-                history_item_id="ja9xsmfGhxYcymxGcOGB",
+                history_item_id="HISTORY_ITEM_ID",
             )
 
 
@@ -603,7 +622,8 @@ class AsyncHistoryClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -660,7 +680,7 @@ class AsyncHistoryClient:
 
         async def main() -> None:
             await client.history.download(
-                history_item_ids=["ja9xsmfGhxYcymxGcOGB"],
+                history_item_ids=["HISTORY_ITEM_ID"],
             )
 
 
@@ -672,6 +692,9 @@ class AsyncHistoryClient:
             json={
                 "history_item_ids": history_item_ids,
                 "output_format": output_format,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

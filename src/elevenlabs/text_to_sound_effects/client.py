@@ -41,7 +41,7 @@ class TextToSoundEffectsClient:
             A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -56,9 +56,7 @@ class TextToSoundEffectsClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_sound_effects.convert(
-            text="string",
-            duration_seconds=1.1,
-            prompt_influence=1.1,
+            text="Spacious braam suitable for high-impact movie trailer moments",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -69,12 +67,16 @@ class TextToSoundEffectsClient:
                 "duration_seconds": duration_seconds,
                 "prompt_influence": prompt_influence,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -121,7 +123,7 @@ class AsyncTextToSoundEffectsClient:
             A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -141,9 +143,7 @@ class AsyncTextToSoundEffectsClient:
 
         async def main() -> None:
             await client.text_to_sound_effects.convert(
-                text="string",
-                duration_seconds=1.1,
-                prompt_influence=1.1,
+                text="Spacious braam suitable for high-impact movie trailer moments",
             )
 
 
@@ -157,12 +157,16 @@ class AsyncTextToSoundEffectsClient:
                 "duration_seconds": duration_seconds,
                 "prompt_influence": prompt_influence,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()

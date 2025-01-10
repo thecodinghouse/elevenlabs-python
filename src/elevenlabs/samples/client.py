@@ -46,8 +46,8 @@ class SamplesClient:
             api_key="YOUR_API_KEY",
         )
         client.samples.delete(
-            voice_id="ja9xsmfGhxYcymxGcOGB",
-            sample_id="pMsXgVXv3BLzUgSXRplE",
+            voice_id="VOICE_ID",
+            sample_id="SAMPLE_ID",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -94,7 +94,7 @@ class SamplesClient:
             Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -109,8 +109,8 @@ class SamplesClient:
             api_key="YOUR_API_KEY",
         )
         client.samples.get_audio(
-            voice_id="ja9xsmfGhxYcymxGcOGB",
-            sample_id="pMsXgVXv3BLzUgSXRplE",
+            voice_id="VOICE_ID",
+            sample_id="SAMPLE_ID",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -120,7 +120,8 @@ class SamplesClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -179,8 +180,8 @@ class AsyncSamplesClient:
 
         async def main() -> None:
             await client.samples.delete(
-                voice_id="ja9xsmfGhxYcymxGcOGB",
-                sample_id="pMsXgVXv3BLzUgSXRplE",
+                voice_id="VOICE_ID",
+                sample_id="SAMPLE_ID",
             )
 
 
@@ -230,7 +231,7 @@ class AsyncSamplesClient:
             Sample ID to be used, you can use GET https://api.elevenlabs.io/v1/voices/{voice_id} to list all the available samples for a voice.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -250,8 +251,8 @@ class AsyncSamplesClient:
 
         async def main() -> None:
             await client.samples.get_audio(
-                voice_id="ja9xsmfGhxYcymxGcOGB",
-                sample_id="pMsXgVXv3BLzUgSXRplE",
+                voice_id="VOICE_ID",
+                sample_id="SAMPLE_ID",
             )
 
 
@@ -264,7 +265,8 @@ class AsyncSamplesClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()

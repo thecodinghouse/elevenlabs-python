@@ -85,7 +85,7 @@ class VoiceGenerationClient:
             Category code corresponding to the gender of the generated voice. Possible values: female, male.
 
         accent : str
-            Category code corresponding to the accent of the generated voice. Possible values: american, british, african, australian, indian.
+            Category code corresponding to the accent of the generated voice. Possible values: british, american, african, australian, indian.
 
         age : Age
             Category code corresponding to the age of the generated voice. Possible values: young, middle_aged, old.
@@ -97,7 +97,7 @@ class VoiceGenerationClient:
             Text to generate, text length has to be between 100 and 1000.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -129,12 +129,16 @@ class VoiceGenerationClient:
                 "accent_strength": accent_strength,
                 "text": text,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -159,6 +163,7 @@ class VoiceGenerationClient:
         voice_name: str,
         voice_description: str,
         generated_voice_id: str,
+        played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         labels: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
@@ -175,6 +180,9 @@ class VoiceGenerationClient:
 
         generated_voice_id : str
             The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+
+        played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
+            List of voice ids that the user has played but not selected. Used for RLHF.
 
         labels : typing.Optional[typing.Dict[str, str]]
             Optional, metadata to add to the created voice. Defaults to None.
@@ -207,7 +215,11 @@ class VoiceGenerationClient:
                 "voice_name": voice_name,
                 "voice_description": voice_description,
                 "generated_voice_id": generated_voice_id,
+                "played_not_selected_voice_ids": played_not_selected_voice_ids,
                 "labels": labels,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -312,7 +324,7 @@ class AsyncVoiceGenerationClient:
             Category code corresponding to the gender of the generated voice. Possible values: female, male.
 
         accent : str
-            Category code corresponding to the accent of the generated voice. Possible values: american, british, african, australian, indian.
+            Category code corresponding to the accent of the generated voice. Possible values: british, american, african, australian, indian.
 
         age : Age
             Category code corresponding to the age of the generated voice. Possible values: young, middle_aged, old.
@@ -324,7 +336,7 @@ class AsyncVoiceGenerationClient:
             Text to generate, text length has to be between 100 and 1000.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -364,12 +376,16 @@ class AsyncVoiceGenerationClient:
                 "accent_strength": accent_strength,
                 "text": text,
             },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -394,6 +410,7 @@ class AsyncVoiceGenerationClient:
         voice_name: str,
         voice_description: str,
         generated_voice_id: str,
+        played_not_selected_voice_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         labels: typing.Optional[typing.Dict[str, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Voice:
@@ -410,6 +427,9 @@ class AsyncVoiceGenerationClient:
 
         generated_voice_id : str
             The generated_voice_id to create, call POST /v1/voice-generation/generate-voice and fetch the generated_voice_id from the response header if don't have one yet.
+
+        played_not_selected_voice_ids : typing.Optional[typing.Sequence[str]]
+            List of voice ids that the user has played but not selected. Used for RLHF.
 
         labels : typing.Optional[typing.Dict[str, str]]
             Optional, metadata to add to the created voice. Defaults to None.
@@ -450,7 +470,11 @@ class AsyncVoiceGenerationClient:
                 "voice_name": voice_name,
                 "voice_description": voice_description,
                 "generated_voice_id": generated_voice_id,
+                "played_not_selected_voice_ids": played_not_selected_voice_ids,
                 "labels": labels,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -2,10 +2,12 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from ..types.optimize_streaming_latency import OptimizeStreamingLatency
 from ..types.output_format import OutputFormat
 from ..types.voice_settings import VoiceSettings
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
+from .types.body_text_to_speech_v_1_text_to_speech_voice_id_post_apply_text_normalization import (
+    BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization,
+)
 from ..core.request_options import RequestOptions
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -14,6 +16,17 @@ from ..types.http_validation_error import HttpValidationError
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.body_text_to_speech_with_timestamps_v_1_text_to_speech_voice_id_with_timestamps_post_apply_text_normalization import (
+    BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization,
+)
+from .types.body_text_to_speech_streaming_v_1_text_to_speech_voice_id_stream_post_apply_text_normalization import (
+    BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization,
+)
+from .types.body_text_to_speech_streaming_with_timestamps_v_1_text_to_speech_voice_id_stream_with_timestamps_post_apply_text_normalization import (
+    BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization,
+)
+from .types.text_to_speech_stream_with_timestamps_response import TextToSpeechStreamWithTimestampsResponse
+import json
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -30,7 +43,7 @@ class TextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -43,6 +56,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -59,8 +76,15 @@ class TextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -78,7 +102,7 @@ class TextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -92,8 +116,14 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -102,21 +132,16 @@ class TextToSpeechClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs, VoiceSettings
+        from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert(
-            voice_id="pMsXgVXv3BLzUgSXRplE",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
-            text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-            voice_settings=VoiceSettings(
-                stability=0.1,
-                similarity_boost=0.3,
-                style=0.2,
-            ),
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -144,13 +169,19 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    audio_data = b''.join(chunk for chunk in _response.iter_bytes())
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    audio_data = b''.join(chunk for chunk in _response.iter_bytes(chunk_size=_chunk_size))
                     request_id = _response.headers.get("request-id")
                     return audio_data, request_id
                 _response.read()
@@ -175,7 +206,7 @@ class TextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -188,6 +219,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -204,8 +239,15 @@ class TextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -223,7 +265,7 @@ class TextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -236,6 +278,12 @@ class TextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -253,8 +301,10 @@ class TextToSpeechClient:
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_with_timestamps(
-            voice_id="21m00Tcm4TlvDq8ikWAM",
-            text="text",
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -282,6 +332,11 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -318,7 +373,7 @@ class TextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -331,6 +386,10 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -347,8 +406,15 @@ class TextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -366,7 +432,7 @@ class TextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -380,8 +446,14 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -390,21 +462,16 @@ class TextToSpeechClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs, VoiceSettings
+        from elevenlabs import ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.text_to_speech.convert_as_stream(
-            voice_id="pMsXgVXv3BLzUgSXRplE",
-            optimize_streaming_latency="0",
-            output_format="mp3_22050_32",
-            text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-            voice_settings=VoiceSettings(
-                stability=0.1,
-                similarity_boost=0.3,
-                style=0.2,
-            ),
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
         )
         """
         with self._client_wrapper.httpx_client.stream(
@@ -432,13 +499,19 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -463,7 +536,7 @@ class TextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -476,8 +549,12 @@ class TextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.Iterator[TextToSpeechStreamWithTimestampsResponse]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -492,8 +569,15 @@ class TextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -511,7 +595,7 @@ class TextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -525,12 +609,19 @@ class TextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.Iterator[TextToSpeechStreamWithTimestampsResponse]
+            Stream of JSON objects containing audio chunks and character timing information
 
         Examples
         --------
@@ -539,12 +630,16 @@ class TextToSpeechClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.text_to_speech.stream_with_timestamps(
-            voice_id="21m00Tcm4TlvDq8ikWAM",
-            text="text",
+        response = client.text_to_speech.stream_with_timestamps(
+            voice_id="JBFqnCBsd6RMkjVDRZzb",
+            output_format="mp3_44100_128",
+            text="The first move is what sets everything in motion.",
+            model_id="eleven_multilingual_v2",
         )
+        for chunk in response:
+            yield chunk
         """
-        _response = self._client_wrapper.httpx_client.request(
+        with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
             method="POST",
             params={
@@ -569,27 +664,46 @@ class TextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    for _text in _response.iter_lines():
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(
+                                TextToSpeechStreamWithTimestampsResponse,
+                                construct_type(
+                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                    object_=json.loads(_text),
+                                ),
+                            )
+                        except:
+                            pass
+                    return
+                _response.read()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncTextToSpeechClient:
@@ -602,7 +716,7 @@ class AsyncTextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -615,6 +729,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -631,8 +749,15 @@ class AsyncTextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -650,7 +775,7 @@ class AsyncTextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -664,8 +789,14 @@ class AsyncTextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -676,7 +807,7 @@ class AsyncTextToSpeechClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs, VoiceSettings
+        from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -685,15 +816,10 @@ class AsyncTextToSpeechClient:
 
         async def main() -> None:
             await client.text_to_speech.convert(
-                voice_id="pMsXgVXv3BLzUgSXRplE",
-                optimize_streaming_latency="0",
-                output_format="mp3_22050_32",
-                text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-                voice_settings=VoiceSettings(
-                    stability=0.1,
-                    similarity_boost=0.3,
-                    style=0.2,
-                ),
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                output_format="mp3_44100_128",
+                text="The first move is what sets everything in motion.",
+                model_id="eleven_multilingual_v2",
             )
 
 
@@ -724,13 +850,19 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -755,7 +887,7 @@ class AsyncTextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -768,6 +900,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -784,8 +920,15 @@ class AsyncTextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -803,7 +946,7 @@ class AsyncTextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -816,6 +959,12 @@ class AsyncTextToSpeechClient:
 
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechWithTimestampsV1TextToSpeechVoiceIdWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -838,8 +987,10 @@ class AsyncTextToSpeechClient:
 
         async def main() -> None:
             await client.text_to_speech.convert_with_timestamps(
-                voice_id="21m00Tcm4TlvDq8ikWAM",
-                text="text",
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                output_format="mp3_44100_128",
+                text="The first move is what sets everything in motion.",
+                model_id="eleven_multilingual_v2",
             )
 
 
@@ -870,6 +1021,11 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -904,7 +1060,7 @@ class AsyncTextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -917,6 +1073,10 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -933,8 +1093,15 @@ class AsyncTextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -952,7 +1119,7 @@ class AsyncTextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -966,8 +1133,14 @@ class AsyncTextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingV1TextToSpeechVoiceIdStreamPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
@@ -978,7 +1151,7 @@ class AsyncTextToSpeechClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs, VoiceSettings
+        from elevenlabs import AsyncElevenLabs
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -987,15 +1160,10 @@ class AsyncTextToSpeechClient:
 
         async def main() -> None:
             await client.text_to_speech.convert_as_stream(
-                voice_id="pMsXgVXv3BLzUgSXRplE",
-                optimize_streaming_latency="0",
-                output_format="mp3_22050_32",
-                text="It sure does, Jackie… My mama always said: “In Carolina, the air's so thick you can wear it!”",
-                voice_settings=VoiceSettings(
-                    stability=0.1,
-                    similarity_boost=0.3,
-                    style=0.2,
-                ),
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                output_format="mp3_44100_128",
+                text="The first move is what sets everything in motion.",
+                model_id="eleven_multilingual_v2",
             )
 
 
@@ -1026,13 +1194,19 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -1057,7 +1231,7 @@ class AsyncTextToSpeechClient:
         *,
         text: str,
         enable_logging: typing.Optional[bool] = None,
-        optimize_streaming_latency: typing.Optional[OptimizeStreamingLatency] = None,
+        optimize_streaming_latency: typing.Optional[int] = None,
         output_format: typing.Optional[OutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -1070,8 +1244,12 @@ class AsyncTextToSpeechClient:
         next_text: typing.Optional[str] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
+        apply_text_normalization: typing.Optional[
+            BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]:
         """
         Converts text into speech using a voice of your choice and returns a stream of JSONs containing audio as a base64 encoded string together with information on when which character was spoken.
 
@@ -1086,8 +1264,15 @@ class AsyncTextToSpeechClient:
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
 
-        optimize_streaming_latency : typing.Optional[OptimizeStreamingLatency]
-            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model.
+        optimize_streaming_latency : typing.Optional[int]
+            You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
+            0 - default mode (no latency optimizations)
+            1 - normal latency optimizations (about 50% of possible latency improvement of option 3)
+            2 - strong latency optimizations (about 75% of possible latency improvement of option 3)
+            3 - max latency optimizations
+            4 - max latency optimizations, but also with text normalizer turned off for even more latency savings (best latency, but can mispronounce eg numbers and dates).
+
+            Defaults to None.
 
         output_format : typing.Optional[OutputFormat]
             The output format of the generated audio.
@@ -1105,7 +1290,7 @@ class AsyncTextToSpeechClient:
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
 
         seed : typing.Optional[int]
-            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be integer between 0 and 4294967295.
 
         previous_text : typing.Optional[str]
             The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
@@ -1119,12 +1304,19 @@ class AsyncTextToSpeechClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
 
+        use_pvc_as_ivc : typing.Optional[bool]
+            If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+
+        apply_text_normalization : typing.Optional[BodyTextToSpeechStreamingWithTimestampsV1TextToSpeechVoiceIdStreamWithTimestampsPostApplyTextNormalization]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped. Cannot be turned on for 'eleven_turbo_v2_5' model.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
-        Returns
-        -------
-        None
+        Yields
+        ------
+        typing.AsyncIterator[TextToSpeechStreamWithTimestampsResponse]
+            Stream of JSON objects containing audio chunks and character timing information
 
         Examples
         --------
@@ -1138,15 +1330,19 @@ class AsyncTextToSpeechClient:
 
 
         async def main() -> None:
-            await client.text_to_speech.stream_with_timestamps(
-                voice_id="21m00Tcm4TlvDq8ikWAM",
-                text="text",
+            response = await client.text_to_speech.stream_with_timestamps(
+                voice_id="JBFqnCBsd6RMkjVDRZzb",
+                output_format="mp3_44100_128",
+                text="The first move is what sets everything in motion.",
+                model_id="eleven_multilingual_v2",
             )
+            async for chunk in response:
+                yield chunk
 
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        async with self._client_wrapper.httpx_client.stream(
             f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
             method="POST",
             params={
@@ -1171,24 +1367,43 @@ class AsyncTextToSpeechClient:
                 "next_text": next_text,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "use_pvc_as_ivc": use_pvc_as_ivc,
+                "apply_text_normalization": apply_text_normalization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    typing.cast(
-                        HttpValidationError,
-                        construct_type(
-                            type_=HttpValidationError,  # type: ignore
-                            object_=_response.json(),
-                        ),
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    async for _text in _response.aiter_lines():
+                        try:
+                            if len(_text) == 0:
+                                continue
+                            yield typing.cast(
+                                TextToSpeechStreamWithTimestampsResponse,
+                                construct_type(
+                                    type_=TextToSpeechStreamWithTimestampsResponse,  # type: ignore
+                                    object_=json.loads(_text),
+                                ),
+                            )
+                        except:
+                            pass
+                    return
+                await _response.aread()
+                if _response.status_code == 422:
+                    raise UnprocessableEntityError(
+                        typing.cast(
+                            HttpValidationError,
+                            construct_type(
+                                type_=HttpValidationError,  # type: ignore
+                                object_=_response.json(),
+                            ),
+                        )
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -19,7 +19,7 @@ from .types import OutputFormat
 
 DEFAULT_VOICE = Voice(
     voice_id="EXAVITQu4vr4xnSDxMaL",
-    name="Rachel",
+    name="Sarah",
     settings=VoiceSettings(
         stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True
     ),
@@ -68,7 +68,7 @@ class ElevenLabs(BaseElevenLabs):
         *,
         base_url: typing.Optional[str] = None,
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("ELEVEN_API_KEY"),
+        api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY") or os.getenv("ELEVEN_API_KEY"),
         timeout: typing.Optional[float] = 60,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -122,7 +122,7 @@ class ElevenLabs(BaseElevenLabs):
       text: Union[str, Iterator[str]],
       voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
-      model: Union[ModelId, Model] = "eleven_monolingual_v1",
+      model: Union[ModelId, Model] = "eleven_multilingual_v2",
       optimize_streaming_latency: typing.Optional[int] = 0,
       stream: bool = False,
       output_format: Optional[OutputFormat] = "mp3_44100_128",
@@ -134,7 +134,7 @@ class ElevenLabs(BaseElevenLabs):
         """
             - text: Union[str, Iterator[str]]. The string or stream of strings that will get converted into speech.
 
-            - voice: str. A voice id, name, or voice response. Defaults to the Rachel voice. 
+            - voice: str. A voice id, name, or voice response. Defaults to the Sarah voice. 
 
             - model: typing.Optional[str]. Identifier of the model that will be used, you can query them using GET /v1/models. 
                                            The model needs to have support for text to speech, you can check this using the 
@@ -302,7 +302,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
       text: str,
       voice: Union[VoiceId, VoiceName, Voice] = DEFAULT_VOICE,
       voice_settings: typing.Optional[VoiceSettings] = DEFAULT_VOICE.settings,
-      model: Union[ModelId, Model] = "eleven_monolingual_v1",
+      model: Union[ModelId, Model] = "eleven_multilingual_v2",
       optimize_streaming_latency: typing.Optional[int] = 0,
       stream: bool = False,
       output_format: Optional[OutputFormat] = "mp3_44100_128",

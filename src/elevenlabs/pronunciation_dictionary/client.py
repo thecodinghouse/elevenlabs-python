@@ -36,9 +36,9 @@ class PronunciationDictionaryClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = None,
-        description: typing.Optional[str] = None,
-        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = None,
+        file: typing.Optional[core.File] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -115,7 +115,7 @@ class PronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def add_rules_to_the_pronunciation_dictionary(
+    def add_rules(
         self,
         pronunciation_dictionary_id: str,
         *,
@@ -153,7 +153,7 @@ class PronunciationDictionaryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
+        client.pronunciation_dictionary.add_rules(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
             rules=[
                 PronunciationDictionaryRule_Phoneme(
@@ -171,6 +171,9 @@ class PronunciationDictionaryClient:
                 "rules": convert_and_respect_annotation_metadata(
                     object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -199,7 +202,7 @@ class PronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def remove_rules_from_the_pronunciation_dictionary(
+    def remove_rules(
         self,
         pronunciation_dictionary_id: str,
         *,
@@ -232,7 +235,7 @@ class PronunciationDictionaryClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.pronunciation_dictionary.remove_rules_from_the_pronunciation_dictionary(
+        client.pronunciation_dictionary.remove_rules(
             pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
             rule_strings=["rule_strings"],
         )
@@ -242,6 +245,9 @@ class PronunciationDictionaryClient:
             method="POST",
             json={
                 "rule_strings": rule_strings,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -465,9 +471,9 @@ class AsyncPronunciationDictionaryClient:
         self,
         *,
         name: str,
-        file: typing.Optional[core.File] = None,
-        description: typing.Optional[str] = None,
-        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = None,
+        file: typing.Optional[core.File] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        workspace_access: typing.Optional[PronunciationDictionaryAddFromFileRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddPronunciationDictionaryResponseModel:
         """
@@ -552,7 +558,7 @@ class AsyncPronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def add_rules_to_the_pronunciation_dictionary(
+    async def add_rules(
         self,
         pronunciation_dictionary_id: str,
         *,
@@ -595,7 +601,7 @@ class AsyncPronunciationDictionaryClient:
 
 
         async def main() -> None:
-            await client.pronunciation_dictionary.add_rules_to_the_pronunciation_dictionary(
+            await client.pronunciation_dictionary.add_rules(
                 pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
                 rules=[
                     PronunciationDictionaryRule_Phoneme(
@@ -616,6 +622,9 @@ class AsyncPronunciationDictionaryClient:
                 "rules": convert_and_respect_annotation_metadata(
                     object_=rules, annotation=typing.Sequence[PronunciationDictionaryRule], direction="write"
                 ),
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -644,7 +653,7 @@ class AsyncPronunciationDictionaryClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def remove_rules_from_the_pronunciation_dictionary(
+    async def remove_rules(
         self,
         pronunciation_dictionary_id: str,
         *,
@@ -682,7 +691,7 @@ class AsyncPronunciationDictionaryClient:
 
 
         async def main() -> None:
-            await client.pronunciation_dictionary.remove_rules_from_the_pronunciation_dictionary(
+            await client.pronunciation_dictionary.remove_rules(
                 pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
                 rule_strings=["rule_strings"],
             )
@@ -695,6 +704,9 @@ class AsyncPronunciationDictionaryClient:
             method="POST",
             json={
                 "rule_strings": rule_strings,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

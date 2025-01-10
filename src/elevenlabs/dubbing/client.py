@@ -12,9 +12,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.get_transcript_for_dub_v_1_dubbing_dubbing_id_transcript_language_code_get_request_format_type import (
-    GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType,
-)
+from .types.dubbing_get_transcript_for_dub_request_format_type import DubbingGetTranscriptForDubRequestFormatType
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -29,15 +27,17 @@ class DubbingClient:
         self,
         *,
         target_lang: str,
-        file: typing.Optional[core.File] = None,
-        name: typing.Optional[str] = None,
-        source_url: typing.Optional[str] = None,
-        source_lang: typing.Optional[str] = None,
-        num_speakers: typing.Optional[int] = None,
-        watermark: typing.Optional[bool] = None,
-        start_time: typing.Optional[int] = None,
-        end_time: typing.Optional[int] = None,
-        highest_resolution: typing.Optional[bool] = None,
+        file: typing.Optional[core.File] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        source_url: typing.Optional[str] = OMIT,
+        source_lang: typing.Optional[str] = OMIT,
+        num_speakers: typing.Optional[int] = OMIT,
+        watermark: typing.Optional[bool] = OMIT,
+        start_time: typing.Optional[int] = OMIT,
+        end_time: typing.Optional[int] = OMIT,
+        highest_resolution: typing.Optional[bool] = OMIT,
+        drop_background_audio: typing.Optional[bool] = OMIT,
+        use_profanity_filter: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -75,6 +75,12 @@ class DubbingClient:
         highest_resolution : typing.Optional[bool]
             Whether to use the highest resolution available.
 
+        drop_background_audio : typing.Optional[bool]
+            An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+
+        use_profanity_filter : typing.Optional[bool]
+            [BETA] Whether transcripts should have profanities censored with the words '[censored]'
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -107,6 +113,8 @@ class DubbingClient:
                 "start_time": start_time,
                 "end_time": end_time,
                 "highest_resolution": highest_resolution,
+                "drop_background_audio": drop_background_audio,
+                "use_profanity_filter": use_profanity_filter,
             },
             files={
                 "file": file,
@@ -271,24 +279,12 @@ class DubbingClient:
             ID of the language.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
         typing.Iterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.dubbing.get_dubbed_file(
-            dubbing_id="string",
-            language_code="string",
-        )
         """
         with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
@@ -297,7 +293,8 @@ class DubbingClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    for _chunk in _response.iter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 _response.read()
@@ -321,9 +318,7 @@ class DubbingClient:
         dubbing_id: str,
         language_code: str,
         *,
-        format_type: typing.Optional[
-            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-        ] = None,
+        format_type: typing.Optional[DubbingGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -337,7 +332,7 @@ class DubbingClient:
         language_code : str
             ID of the language.
 
-        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+        format_type : typing.Optional[DubbingGetTranscriptForDubRequestFormatType]
             Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
@@ -401,15 +396,17 @@ class AsyncDubbingClient:
         self,
         *,
         target_lang: str,
-        file: typing.Optional[core.File] = None,
-        name: typing.Optional[str] = None,
-        source_url: typing.Optional[str] = None,
-        source_lang: typing.Optional[str] = None,
-        num_speakers: typing.Optional[int] = None,
-        watermark: typing.Optional[bool] = None,
-        start_time: typing.Optional[int] = None,
-        end_time: typing.Optional[int] = None,
-        highest_resolution: typing.Optional[bool] = None,
+        file: typing.Optional[core.File] = OMIT,
+        name: typing.Optional[str] = OMIT,
+        source_url: typing.Optional[str] = OMIT,
+        source_lang: typing.Optional[str] = OMIT,
+        num_speakers: typing.Optional[int] = OMIT,
+        watermark: typing.Optional[bool] = OMIT,
+        start_time: typing.Optional[int] = OMIT,
+        end_time: typing.Optional[int] = OMIT,
+        highest_resolution: typing.Optional[bool] = OMIT,
+        drop_background_audio: typing.Optional[bool] = OMIT,
+        use_profanity_filter: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
         """
@@ -446,6 +443,12 @@ class AsyncDubbingClient:
 
         highest_resolution : typing.Optional[bool]
             Whether to use the highest resolution available.
+
+        drop_background_audio : typing.Optional[bool]
+            An advanced setting. Whether to drop background audio from the final dub. This can improve dub quality where it's known that audio shouldn't have a background track such as for speeches or monologues.
+
+        use_profanity_filter : typing.Optional[bool]
+            [BETA] Whether transcripts should have profanities censored with the words '[censored]'
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -487,6 +490,8 @@ class AsyncDubbingClient:
                 "start_time": start_time,
                 "end_time": end_time,
                 "highest_resolution": highest_resolution,
+                "drop_background_audio": drop_background_audio,
+                "use_profanity_filter": use_profanity_filter,
             },
             files={
                 "file": file,
@@ -667,32 +672,12 @@ class AsyncDubbingClient:
             ID of the language.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Yields
         ------
         typing.AsyncIterator[bytes]
             Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.dubbing.get_dubbed_file(
-                dubbing_id="string",
-                language_code="string",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
@@ -701,7 +686,8 @@ class AsyncDubbingClient:
         ) as _response:
             try:
                 if 200 <= _response.status_code < 300:
-                    async for _chunk in _response.aiter_bytes():
+                    _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
                         yield _chunk
                     return
                 await _response.aread()
@@ -725,9 +711,7 @@ class AsyncDubbingClient:
         dubbing_id: str,
         language_code: str,
         *,
-        format_type: typing.Optional[
-            GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType
-        ] = None,
+        format_type: typing.Optional[DubbingGetTranscriptForDubRequestFormatType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -741,7 +725,7 @@ class AsyncDubbingClient:
         language_code : str
             ID of the language.
 
-        format_type : typing.Optional[GetTranscriptForDubV1DubbingDubbingIdTranscriptLanguageCodeGetRequestFormatType]
+        format_type : typing.Optional[DubbingGetTranscriptForDubRequestFormatType]
             Format to use for the subtitle file, either 'srt' or 'webvtt'
 
         request_options : typing.Optional[RequestOptions]
