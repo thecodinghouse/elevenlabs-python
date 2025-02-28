@@ -439,8 +439,7 @@ class VoicesClient:
                 "name": name,
                 "remove_background_noise": remove_background_noise,
                 "description": description,
-                "labels": labels,
-                "remove_background_noise": remove_background_noise
+                "labels": labels
             },
             files={
                 "files": files,
