@@ -36,7 +36,7 @@ class SpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
+        Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -47,7 +47,7 @@ class SpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -80,7 +80,7 @@ class SpeechToSpeechClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            The generated audio file
 
         Examples
         --------
@@ -152,7 +152,7 @@ class SpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
+        Stream audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -163,7 +163,7 @@ class SpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -196,7 +196,7 @@ class SpeechToSpeechClient:
         Yields
         ------
         typing.Iterator[bytes]
-            Successful Response
+            Streaming audio data
 
         Examples
         --------
@@ -273,7 +273,7 @@ class AsyncSpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
+        Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -284,7 +284,7 @@ class AsyncSpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -317,7 +317,7 @@ class AsyncSpeechToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            The generated audio file
 
         Examples
         --------
@@ -397,7 +397,7 @@ class AsyncSpeechToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
+        Stream audio from one voice to another. Maintain full control over emotion, timing and delivery.
 
         Parameters
         ----------
@@ -408,7 +408,7 @@ class AsyncSpeechToSpeechClient:
             See core.File for more documentation
 
         enable_logging : typing.Optional[bool]
-            When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
 
         optimize_streaming_latency : typing.Optional[int]
             You can turn on latency optimizations at some cost of quality. The best possible final latency varies by model. Possible values:
@@ -441,7 +441,7 @@ class AsyncSpeechToSpeechClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
-            Successful Response
+            Streaming audio data
 
         Examples
         --------

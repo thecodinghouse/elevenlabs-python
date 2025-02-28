@@ -203,7 +203,7 @@ class VoicesClient:
             Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
         with_settings : typing.Optional[bool]
-            If set will return settings information corresponding to the voice, requires authorization.
+            This parameter is now deprecated. It is ignored and will be removed in a future version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -657,6 +657,7 @@ class VoicesClient:
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         featured: typing.Optional[bool] = None,
+        min_notice_period_days: typing.Optional[int] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
         sort: typing.Optional[str] = None,
@@ -697,6 +698,9 @@ class VoicesClient:
 
         featured : typing.Optional[bool]
             Filter featured voices
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
 
         reader_app_enabled : typing.Optional[bool]
             Filter voices that are enabled for the reader app
@@ -744,6 +748,7 @@ class VoicesClient:
                 "use_cases": use_cases,
                 "descriptives": descriptives,
                 "featured": featured,
+                "min_notice_period_days": min_notice_period_days,
                 "reader_app_enabled": reader_app_enabled,
                 "owner_id": owner_id,
                 "sort": sort,
@@ -1116,7 +1121,7 @@ class AsyncVoicesClient:
             Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
 
         with_settings : typing.Optional[bool]
-            If set will return settings information corresponding to the voice, requires authorization.
+            This parameter is now deprecated. It is ignored and will be removed in a future version.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1617,6 +1622,7 @@ class AsyncVoicesClient:
         use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         descriptives: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         featured: typing.Optional[bool] = None,
+        min_notice_period_days: typing.Optional[int] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
         sort: typing.Optional[str] = None,
@@ -1657,6 +1663,9 @@ class AsyncVoicesClient:
 
         featured : typing.Optional[bool]
             Filter featured voices
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
 
         reader_app_enabled : typing.Optional[bool]
             Filter voices that are enabled for the reader app
@@ -1712,6 +1721,7 @@ class AsyncVoicesClient:
                 "use_cases": use_cases,
                 "descriptives": descriptives,
                 "featured": featured,
+                "min_notice_period_days": min_notice_period_days,
                 "reader_app_enabled": reader_app_enabled,
                 "owner_id": owner_id,
                 "sort": sort,

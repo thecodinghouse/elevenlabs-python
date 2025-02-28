@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .dubbing_media_metadata import DubbingMediaMetadata
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -11,6 +12,7 @@ class DubbingMetadataResponse(UncheckedBaseModel):
     name: str
     status: str
     target_languages: typing.List[str]
+    media_metadata: typing.Optional[DubbingMediaMetadata] = None
     error: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

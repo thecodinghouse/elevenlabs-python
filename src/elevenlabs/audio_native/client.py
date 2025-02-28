@@ -10,6 +10,9 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
+from ..core.jsonable_encoder import jsonable_encoder
+from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -46,7 +49,7 @@ class AudioNativeClient:
             Project name.
 
         image : typing.Optional[str]
-            Image URL used in the player. If not provided, default image set in the Player settings is used.
+            (Deprecated) Image URL used in the player. If not provided, default image set in the Player settings is used.
 
         author : typing.Optional[str]
             Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
@@ -55,7 +58,7 @@ class AudioNativeClient:
             Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
         small : typing.Optional[bool]
-            Whether to use small player or not. If not provided, default value set in the Player settings is used.
+            (Deprecated) Whether to use small player or not. If not provided, default value set in the Player settings is used.
 
         text_color : typing.Optional[str]
             Text color used in the player. If not provided, default text color set in the Player settings is used.
@@ -64,7 +67,7 @@ class AudioNativeClient:
             Background color used in the player. If not provided, default background color set in the Player settings is used.
 
         sessionization : typing.Optional[int]
-            Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+            (Deprecated) Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
 
         voice_id : typing.Optional[str]
             Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
@@ -143,6 +146,147 @@ class AudioNativeClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_settings(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAudioNativeProjectSettingsResponseModel:
+        """
+        Get player settings for the specific project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAudioNativeProjectSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_native.get_settings(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAudioNativeProjectSettingsResponseModel,
+                    construct_type(
+                        type_=GetAudioNativeProjectSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_content(
+        self,
+        project_id: str,
+        *,
+        file: typing.Optional[core.File] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        auto_publish: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AudioNativeEditContentResponseModel:
+        """
+        Updates content for the specific AudioNative Project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
+
+        auto_publish : typing.Optional[bool]
+            Whether to auto publish the new project snapshot after it's converted.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioNativeEditContentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.audio_native.update_content(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            method="POST",
+            data={
+                "auto_convert": auto_convert,
+                "auto_publish": auto_publish,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AudioNativeEditContentResponseModel,
+                    construct_type(
+                        type_=AudioNativeEditContentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncAudioNativeClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -174,7 +318,7 @@ class AsyncAudioNativeClient:
             Project name.
 
         image : typing.Optional[str]
-            Image URL used in the player. If not provided, default image set in the Player settings is used.
+            (Deprecated) Image URL used in the player. If not provided, default image set in the Player settings is used.
 
         author : typing.Optional[str]
             Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
@@ -183,7 +327,7 @@ class AsyncAudioNativeClient:
             Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
 
         small : typing.Optional[bool]
-            Whether to use small player or not. If not provided, default value set in the Player settings is used.
+            (Deprecated) Whether to use small player or not. If not provided, default value set in the Player settings is used.
 
         text_color : typing.Optional[str]
             Text color used in the player. If not provided, default text color set in the Player settings is used.
@@ -192,7 +336,7 @@ class AsyncAudioNativeClient:
             Background color used in the player. If not provided, default background color set in the Player settings is used.
 
         sessionization : typing.Optional[int]
-            Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+            (Deprecated) Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
 
         voice_id : typing.Optional[str]
             Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
@@ -261,6 +405,163 @@ class AsyncAudioNativeClient:
                     AudioNativeCreateProjectResponseModel,
                     construct_type(
                         type_=AudioNativeCreateProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_settings(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetAudioNativeProjectSettingsResponseModel:
+        """
+        Get player settings for the specific project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAudioNativeProjectSettingsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.audio_native.get_settings(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetAudioNativeProjectSettingsResponseModel,
+                    construct_type(
+                        type_=GetAudioNativeProjectSettingsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_content(
+        self,
+        project_id: str,
+        *,
+        file: typing.Optional[core.File] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        auto_publish: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AudioNativeEditContentResponseModel:
+        """
+        Updates content for the specific AudioNative Project.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the project to audio or not.
+
+        auto_publish : typing.Optional[bool]
+            Whether to auto publish the new project snapshot after it's converted.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AudioNativeEditContentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.audio_native.update_content(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            method="POST",
+            data={
+                "auto_convert": auto_convert,
+                "auto_publish": auto_publish,
+            },
+            files={
+                "file": file,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AudioNativeEditContentResponseModel,
+                    construct_type(
+                        type_=AudioNativeEditContentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

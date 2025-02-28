@@ -3,11 +3,13 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..core.jsonable_encoder import jsonable_encoder
 from .types.body_update_member_v_1_workspace_members_post_workspace_role import (
     BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole,
 )
@@ -21,16 +23,225 @@ class WorkspaceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def invite_user(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    def search_user_groups(
+        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[WorkspaceGroupByNameResponseModel]:
+        """
+        Searches for user groups in the workspace. Multiple or no groups may be returned.
+
+        Parameters
+        ----------
+        name : str
+            Name of the group to find.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[WorkspaceGroupByNameResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.search_user_groups(
+            name="name",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/workspace/groups/search",
+            method="GET",
+            params={
+                "name": name,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[WorkspaceGroupByNameResponseModel],
+                    construct_type(
+                        type_=typing.List[WorkspaceGroupByNameResponseModel],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_member_from_user_group(
+        self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
-        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+        Removes a member from the specified group. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        group_id : str
+            The ID of the target group.
+
+        email : str
+            The email of the target workspace member.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.delete_member_from_user_group(
+            group_id="group_id",
+            email="email",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            method="POST",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def add_member_to_user_group(
+        self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        group_id : str
+            The ID of the target group.
+
+        email : str
+            The email of the target workspace member.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.add_member_to_user_group(
+            group_id="group_id",
+            email="email",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            method="POST",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def invite_user(
+        self,
+        *,
+        email: str,
+        group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
 
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
+
+        group_ids : typing.Optional[typing.Sequence[str]]
+            The group ids of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -48,7 +259,7 @@ class WorkspaceClient:
             api_key="YOUR_API_KEY",
         )
         client.workspace.invite_user(
-            email="email",
+            email="john.doe@testmail.com",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -56,6 +267,81 @@ class WorkspaceClient:
             method="POST",
             json={
                 "email": email,
+                "group_ids": group_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def invite_multiple_users(
+        self,
+        *,
+        emails: typing.Sequence[str],
+        group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        emails : typing.Sequence[str]
+            The email of the customer
+
+        group_ids : typing.Optional[typing.Sequence[str]]
+            The group ids of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.invite_multiple_users(
+            emails=["emails"],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/workspace/invites/add-bulk",
+            method="POST",
+            json={
+                "emails": emails,
+                "group_ids": group_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -96,7 +382,7 @@ class WorkspaceClient:
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -114,7 +400,7 @@ class WorkspaceClient:
             api_key="YOUR_API_KEY",
         )
         client.workspace.delete_existing_invitation(
-            email="email",
+            email="john.doe@testmail.com",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -237,16 +523,249 @@ class AsyncWorkspaceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def invite_user(
-        self, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    async def search_user_groups(
+        self, *, name: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[WorkspaceGroupByNameResponseModel]:
+        """
+        Searches for user groups in the workspace. Multiple or no groups may be returned.
+
+        Parameters
+        ----------
+        name : str
+            Name of the group to find.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[WorkspaceGroupByNameResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.search_user_groups(
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/workspace/groups/search",
+            method="GET",
+            params={
+                "name": name,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[WorkspaceGroupByNameResponseModel],
+                    construct_type(
+                        type_=typing.List[WorkspaceGroupByNameResponseModel],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_member_from_user_group(
+        self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
-        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+        Removes a member from the specified group. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        group_id : str
+            The ID of the target group.
+
+        email : str
+            The email of the target workspace member.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.delete_member_from_user_group(
+                group_id="group_id",
+                email="email",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/groups/{jsonable_encoder(group_id)}/members/remove",
+            method="POST",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def add_member_to_user_group(
+        self, group_id: str, *, email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        group_id : str
+            The ID of the target group.
+
+        email : str
+            The email of the target workspace member.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.add_member_to_user_group(
+                group_id="group_id",
+                email="email",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/groups/{jsonable_encoder(group_id)}/members",
+            method="POST",
+            json={
+                "email": email,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def invite_user(
+        self,
+        *,
+        email: str,
+        group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
 
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
+
+        group_ids : typing.Optional[typing.Sequence[str]]
+            The group ids of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -269,7 +788,7 @@ class AsyncWorkspaceClient:
 
         async def main() -> None:
             await client.workspace.invite_user(
-                email="email",
+                email="john.doe@testmail.com",
             )
 
 
@@ -280,6 +799,89 @@ class AsyncWorkspaceClient:
             method="POST",
             json={
                 "email": email,
+                "group_ids": group_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def invite_multiple_users(
+        self,
+        *,
+        emails: typing.Sequence[str],
+        group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        emails : typing.Sequence[str]
+            The email of the customer
+
+        group_ids : typing.Optional[typing.Sequence[str]]
+            The group ids of the user
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.invite_multiple_users(
+                emails=["emails"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/workspace/invites/add-bulk",
+            method="POST",
+            json={
+                "emails": emails,
+                "group_ids": group_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -320,7 +922,7 @@ class AsyncWorkspaceClient:
         Parameters
         ----------
         email : str
-            Email of the target user.
+            The email of the customer
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -343,7 +945,7 @@ class AsyncWorkspaceClient:
 
         async def main() -> None:
             await client.workspace.delete_existing_invitation(
-                email="email",
+                email="john.doe@testmail.com",
             )
 
 

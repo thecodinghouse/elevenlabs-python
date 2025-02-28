@@ -11,11 +11,13 @@ from .add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from .add_voice_response_model import AddVoiceResponseModel
 from .age import Age
 from .agent_ban import AgentBan
+from .agent_call_limits import AgentCallLimits
 from .agent_config import AgentConfig
 from .agent_config_override import AgentConfigOverride
 from .agent_config_override_config import AgentConfigOverrideConfig
 from .agent_metadata_response_model import AgentMetadataResponseModel
-from .agent_platform_settings import AgentPlatformSettings
+from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
+from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_summary_response_model import AgentSummaryResponseModel
 from .allowlist_item import AllowlistItem
 from .array_json_schema_property import ArrayJsonSchemaProperty
@@ -25,24 +27,62 @@ from .asr_input_format import AsrInputFormat
 from .asr_provider import AsrProvider
 from .asr_quality import AsrQuality
 from .audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
+from .audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
+from .audio_native_project_settings_response_model import AudioNativeProjectSettingsResponseModel
+from .audio_with_timestamps_response_model import AudioWithTimestampsResponseModel
 from .auth_settings import AuthSettings
 from .authorization_method import AuthorizationMethod
 from .ban_reason_type import BanReasonType
+from .body_add_to_knowledge_base_v_1_convai_add_to_knowledge_base_post import (
+    BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost,
+)
+from .body_add_to_knowledge_base_v_1_convai_agents_agent_id_add_to_knowledge_base_post import (
+    BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost,
+)
 from .breakdown_types import BreakdownTypes
+from .chapter_content_block_extendable_node_response_model import ChapterContentBlockExtendableNodeResponseModel
+from .chapter_content_block_input_model import ChapterContentBlockInputModel
+from .chapter_content_block_response_model import ChapterContentBlockResponseModel
+from .chapter_content_block_response_model_nodes_item import (
+    ChapterContentBlockResponseModelNodesItem,
+    ChapterContentBlockResponseModelNodesItem_Other,
+    ChapterContentBlockResponseModelNodesItem_TtsNode,
+)
+from .chapter_content_block_tts_node_response_model import ChapterContentBlockTtsNodeResponseModel
+from .chapter_content_input_model import ChapterContentInputModel
+from .chapter_content_paragraph_tts_node_input_model import ChapterContentParagraphTtsNodeInputModel
+from .chapter_content_response_model import ChapterContentResponseModel
 from .chapter_response import ChapterResponse
 from .chapter_snapshot_response import ChapterSnapshotResponse
 from .chapter_snapshots_response import ChapterSnapshotsResponse
 from .chapter_state import ChapterState
 from .chapter_statistics_response import ChapterStatisticsResponse
+from .chapter_with_content_response_model import ChapterWithContentResponseModel
+from .chapter_with_content_response_model_state import ChapterWithContentResponseModelState
+from .character_alignment_response_model import CharacterAlignmentResponseModel
 from .client_event import ClientEvent
 from .client_tool_config import ClientToolConfig
 from .conv_ai_new_secret_config import ConvAiNewSecretConfig
 from .conv_ai_secret_locator import ConvAiSecretLocator
 from .conv_ai_stored_secret_config import ConvAiStoredSecretConfig
+from .conv_ai_stored_secret_dependencies import ConvAiStoredSecretDependencies
+from .conv_ai_stored_secret_dependencies_agents_item import (
+    ConvAiStoredSecretDependenciesAgentsItem,
+    ConvAiStoredSecretDependenciesAgentsItem_Available,
+    ConvAiStoredSecretDependenciesAgentsItem_Unknown,
+)
+from .conv_ai_stored_secret_dependencies_tools_item import (
+    ConvAiStoredSecretDependenciesToolsItem,
+    ConvAiStoredSecretDependenciesToolsItem_Available,
+    ConvAiStoredSecretDependenciesToolsItem_Unknown,
+)
+from .conv_ai_webhooks import ConvAiWebhooks
+from .conv_ai_workspace_stored_secret_config import ConvAiWorkspaceStoredSecretConfig
 from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_config import ConversationConfig
 from .conversation_config_client_override import ConversationConfigClientOverride
 from .conversation_config_client_override_config import ConversationConfigClientOverrideConfig
+from .conversation_deletion_settings import ConversationDeletionSettings
 from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
 from .conversation_history_evaluation_criteria_result_common_model import (
     ConversationHistoryEvaluationCriteriaResultCommonModel,
@@ -55,6 +95,13 @@ from .conversation_history_transcript_tool_call_common_model import Conversation
 from .conversation_history_transcript_tool_result_common_model import ConversationHistoryTranscriptToolResultCommonModel
 from .conversation_initiation_client_data import ConversationInitiationClientData
 from .conversation_initiation_client_data_config import ConversationInitiationClientDataConfig
+from .conversation_initiation_client_data_dynamic_variables_value import (
+    ConversationInitiationClientDataDynamicVariablesValue,
+)
+from .conversation_initiation_client_data_webhook import ConversationInitiationClientDataWebhook
+from .conversation_initiation_client_data_webhook_request_headers_value import (
+    ConversationInitiationClientDataWebhookRequestHeadersValue,
+)
 from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
 from .conversation_summary_response_model import ConversationSummaryResponseModel
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
@@ -66,16 +113,22 @@ from .create_phone_number_response_model import CreatePhoneNumberResponseModel
 from .currency import Currency
 from .custom_llm import CustomLlm
 from .data_collection_result_common_model import DataCollectionResultCommonModel
+from .delete_sample_response_model import DeleteSampleResponseModel
+from .dependent_available_agent_identifier import DependentAvailableAgentIdentifier
+from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
+from .dependent_available_tool_identifier import DependentAvailableToolIdentifier
+from .dependent_available_tool_identifier_access_level import DependentAvailableToolIdentifierAccessLevel
+from .dependent_unknown_agent_identifier import DependentUnknownAgentIdentifier
+from .dependent_unknown_tool_identifier import DependentUnknownToolIdentifier
 from .do_dubbing_response import DoDubbingResponse
+from .dubbing_media_metadata import DubbingMediaMetadata
 from .dubbing_metadata_response import DubbingMetadataResponse
-from .edit_project_response_model import EditProjectResponseModel
-from .embed_config import EmbedConfig
-from .embed_config_avatar import (
-    EmbedConfigAvatar,
-    EmbedConfigAvatar_Image,
-    EmbedConfigAvatar_Orb,
-    EmbedConfigAvatar_Url,
+from .dynamic_variables_config import DynamicVariablesConfig
+from .dynamic_variables_config_dynamic_variable_placeholders_value import (
+    DynamicVariablesConfigDynamicVariablePlaceholdersValue,
 )
+from .edit_chapter_response_model import EditChapterResponseModel
+from .edit_project_response_model import EditProjectResponseModel
 from .embed_variant import EmbedVariant
 from .evaluation_settings import EvaluationSettings
 from .evaluation_success_result import EvaluationSuccessResult
@@ -92,12 +145,30 @@ from .get_agent_embed_response_model import GetAgentEmbedResponseModel
 from .get_agent_link_response_model import GetAgentLinkResponseModel
 from .get_agent_response_model import GetAgentResponseModel
 from .get_agents_page_response_model import GetAgentsPageResponseModel
+from .get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
 from .get_chapters_response import GetChaptersResponse
+from .get_convai_settings_response_model import GetConvaiSettingsResponseModel
 from .get_conversation_response_model import GetConversationResponseModel
 from .get_conversation_response_model_status import GetConversationResponseModelStatus
 from .get_conversations_page_response_model import GetConversationsPageResponseModel
-from .get_knowledge_base_reponse_model import GetKnowledgeBaseReponseModel
-from .get_knowledge_base_reponse_model_type import GetKnowledgeBaseReponseModelType
+from .get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
+from .get_knowledge_base_dependent_agents_response_model_agents_item import (
+    GetKnowledgeBaseDependentAgentsResponseModelAgentsItem,
+    GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available,
+    GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown,
+)
+from .get_knowledge_base_list_response_model import GetKnowledgeBaseListResponseModel
+from .get_knowledge_base_response_model import GetKnowledgeBaseResponseModel
+from .get_knowledge_base_response_model_access_level import GetKnowledgeBaseResponseModelAccessLevel
+from .get_knowledge_base_response_model_type import GetKnowledgeBaseResponseModelType
+from .get_knowledge_base_summary_response_model import GetKnowledgeBaseSummaryResponseModel
+from .get_knowledge_base_summary_response_model_access_level import GetKnowledgeBaseSummaryResponseModelAccessLevel
+from .get_knowledge_base_summary_response_model_dependent_agents_item import (
+    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem,
+    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Available,
+    GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Unknown,
+)
+from .get_knowledge_base_summary_response_model_type import GetKnowledgeBaseSummaryResponseModelType
 from .get_library_voices_response import GetLibraryVoicesResponse
 from .get_phone_number_response_model import GetPhoneNumberResponseModel
 from .get_projects_response import GetProjectsResponse
@@ -105,6 +176,7 @@ from .get_pronunciation_dictionaries_metadata_response_model import GetPronuncia
 from .get_pronunciation_dictionary_metadata_response import GetPronunciationDictionaryMetadataResponse
 from .get_speech_history_response import GetSpeechHistoryResponse
 from .get_voices_response import GetVoicesResponse
+from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
 from .history_alignment_response_model import HistoryAlignmentResponseModel
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .history_item import HistoryItem
@@ -113,6 +185,8 @@ from .image_avatar import ImageAvatar
 from .invoice import Invoice
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .knowledge_base_locator_type import KnowledgeBaseLocatorType
+from .language_preset import LanguagePreset
+from .language_preset_translation import LanguagePresetTranslation
 from .language_response import LanguageResponse
 from .library_voice_response import LibraryVoiceResponse
 from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
@@ -131,8 +205,17 @@ from .object_json_schema_property import ObjectJsonSchemaProperty
 from .object_json_schema_property_properties_value import ObjectJsonSchemaPropertyPropertiesValue
 from .orb_avatar import OrbAvatar
 from .output_format import OutputFormat
+from .paginated_listed_review_task_instance_model import PaginatedListedReviewTaskInstanceModel
 from .phone_number_agent_info import PhoneNumberAgentInfo
+from .podcast_bulletin_mode import PodcastBulletinMode
+from .podcast_bulletin_mode_data import PodcastBulletinModeData
+from .podcast_conversation_mode import PodcastConversationMode
+from .podcast_conversation_mode_data import PodcastConversationModeData
+from .podcast_project_response_model import PodcastProjectResponseModel
+from .podcast_text_source import PodcastTextSource
+from .podcast_url_source import PodcastUrlSource
 from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
+from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
 from .privacy_config import PrivacyConfig
 from .profile_page_response_model import ProfilePageResponseModel
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
@@ -156,7 +239,12 @@ from .project_state import ProjectState
 from .prompt_agent import PromptAgent
 from .prompt_agent_override import PromptAgentOverride
 from .prompt_agent_override_config import PromptAgentOverrideConfig
-from .prompt_agent_tools_item import PromptAgentToolsItem, PromptAgentToolsItem_Client, PromptAgentToolsItem_Webhook
+from .prompt_agent_tools_item import (
+    PromptAgentToolsItem,
+    PromptAgentToolsItem_Client,
+    PromptAgentToolsItem_System,
+    PromptAgentToolsItem_Webhook,
+)
 from .prompt_evaluation_criteria import PromptEvaluationCriteria
 from .pronunciation_dictionary_alias_rule_request_model import PronunciationDictionaryAliasRuleRequestModel
 from .pronunciation_dictionary_phoneme_rule_request_model import PronunciationDictionaryPhonemeRuleRequestModel
@@ -164,25 +252,64 @@ from .pronunciation_dictionary_version_locator import PronunciationDictionaryVer
 from .pronunciation_dictionary_version_response_model import PronunciationDictionaryVersionResponseModel
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
 from .query_params_json_schema import QueryParamsJsonSchema
+from .quote_request_model import QuoteRequestModel
+from .quote_response_model import QuoteResponseModel
 from .reader_resource_response_model import ReaderResourceResponseModel
 from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
 from .recording_response import RecordingResponse
 from .remove_pronunciation_dictionary_rules_response_model import RemovePronunciationDictionaryRulesResponseModel
+from .resource_access_info import ResourceAccessInfo
+from .resource_access_info_role import ResourceAccessInfoRole
+from .review_state import ReviewState
 from .review_status import ReviewStatus
-from .safety import Safety
+from .review_task_instance_response_model import ReviewTaskInstanceResponseModel
+from .safety_common_model import SafetyCommonModel
 from .safety_evaluation import SafetyEvaluation
+from .safety_response_model import SafetyResponseModel
 from .safety_rule import SafetyRule
+from .secret_dependency_type import SecretDependencyType
 from .speech_history_item_response import SpeechHistoryItemResponse
 from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
 from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
+from .speech_to_text_character_response_model import SpeechToTextCharacterResponseModel
+from .speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
+from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
+from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
+from .streaming_audio_chunk_with_timestamps_response_model import StreamingAudioChunkWithTimestampsResponseModel
 from .subscription import Subscription
 from .subscription_response import SubscriptionResponse
 from .subscription_response_model_billing_period import SubscriptionResponseModelBillingPeriod
 from .subscription_response_model_character_refresh_period import SubscriptionResponseModelCharacterRefreshPeriod
 from .subscription_response_model_currency import SubscriptionResponseModelCurrency
 from .subscription_status import SubscriptionStatus
+from .subscription_usage_response_model import SubscriptionUsageResponseModel
+from .system_tool_config import SystemToolConfig
+from .tag_kind import TagKind
+from .tag_model import TagModel
+from .task_instance_event_kind import TaskInstanceEventKind
+from .task_instance_event_response_model import TaskInstanceEventResponseModel
 from .telephony_provider import TelephonyProvider
 from .text_to_speech_as_stream_request import TextToSpeechAsStreamRequest
+from .tool_request_model import ToolRequestModel
+from .tool_request_model_tool_config import (
+    ToolRequestModelToolConfig,
+    ToolRequestModelToolConfig_Client,
+    ToolRequestModelToolConfig_System,
+    ToolRequestModelToolConfig_Webhook,
+)
+from .tool_response_model import ToolResponseModel
+from .tool_response_model_dependent_agents_item import (
+    ToolResponseModelDependentAgentsItem,
+    ToolResponseModelDependentAgentsItem_Available,
+    ToolResponseModelDependentAgentsItem_Unknown,
+)
+from .tool_response_model_tool_config import (
+    ToolResponseModelToolConfig,
+    ToolResponseModelToolConfig_Client,
+    ToolResponseModelToolConfig_System,
+    ToolResponseModelToolConfig_Webhook,
+)
+from .tools_response_model import ToolsResponseModel
 from .tts_conversational_config import TtsConversationalConfig
 from .tts_conversational_config_override import TtsConversationalConfigOverride
 from .tts_conversational_config_override_config import TtsConversationalConfigOverrideConfig
@@ -199,6 +326,7 @@ from .user_feedback_score import UserFeedbackScore
 from .validation_error import ValidationError
 from .validation_error_loc_item import ValidationErrorLocItem
 from .verification_attempt_response import VerificationAttemptResponse
+from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
 from .voice import Voice
 from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
 from .voice_generation_parameter_response import VoiceGenerationParameterResponse
@@ -217,7 +345,23 @@ from .webhook_tool_api_schema_config import WebhookToolApiSchemaConfig
 from .webhook_tool_api_schema_config_method import WebhookToolApiSchemaConfigMethod
 from .webhook_tool_api_schema_config_request_headers_value import WebhookToolApiSchemaConfigRequestHeadersValue
 from .webhook_tool_config import WebhookToolConfig
+from .widget_config import WidgetConfig
+from .widget_config_avatar import (
+    WidgetConfigAvatar,
+    WidgetConfigAvatar_Image,
+    WidgetConfigAvatar_Orb,
+    WidgetConfigAvatar_Url,
+)
+from .widget_config_response_model import WidgetConfigResponseModel
+from .widget_config_response_model_avatar import (
+    WidgetConfigResponseModelAvatar,
+    WidgetConfigResponseModelAvatar_Image,
+    WidgetConfigResponseModelAvatar_Orb,
+    WidgetConfigResponseModelAvatar_Url,
+)
+from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
+from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
 
 __all__ = [
     "Accent",
@@ -231,11 +375,13 @@ __all__ = [
     "AddVoiceResponseModel",
     "Age",
     "AgentBan",
+    "AgentCallLimits",
     "AgentConfig",
     "AgentConfigOverride",
     "AgentConfigOverrideConfig",
     "AgentMetadataResponseModel",
-    "AgentPlatformSettings",
+    "AgentPlatformSettingsRequestModel",
+    "AgentPlatformSettingsResponseModel",
     "AgentSummaryResponseModel",
     "AllowlistItem",
     "ArrayJsonSchemaProperty",
@@ -245,24 +391,52 @@ __all__ = [
     "AsrProvider",
     "AsrQuality",
     "AudioNativeCreateProjectResponseModel",
+    "AudioNativeEditContentResponseModel",
+    "AudioNativeProjectSettingsResponseModel",
+    "AudioWithTimestampsResponseModel",
     "AuthSettings",
     "AuthorizationMethod",
     "BanReasonType",
+    "BodyAddToKnowledgeBaseV1ConvaiAddToKnowledgeBasePost",
+    "BodyAddToKnowledgeBaseV1ConvaiAgentsAgentIdAddToKnowledgeBasePost",
     "BreakdownTypes",
+    "ChapterContentBlockExtendableNodeResponseModel",
+    "ChapterContentBlockInputModel",
+    "ChapterContentBlockResponseModel",
+    "ChapterContentBlockResponseModelNodesItem",
+    "ChapterContentBlockResponseModelNodesItem_Other",
+    "ChapterContentBlockResponseModelNodesItem_TtsNode",
+    "ChapterContentBlockTtsNodeResponseModel",
+    "ChapterContentInputModel",
+    "ChapterContentParagraphTtsNodeInputModel",
+    "ChapterContentResponseModel",
     "ChapterResponse",
     "ChapterSnapshotResponse",
     "ChapterSnapshotsResponse",
     "ChapterState",
     "ChapterStatisticsResponse",
+    "ChapterWithContentResponseModel",
+    "ChapterWithContentResponseModelState",
+    "CharacterAlignmentResponseModel",
     "ClientEvent",
     "ClientToolConfig",
     "ConvAiNewSecretConfig",
     "ConvAiSecretLocator",
     "ConvAiStoredSecretConfig",
+    "ConvAiStoredSecretDependencies",
+    "ConvAiStoredSecretDependenciesAgentsItem",
+    "ConvAiStoredSecretDependenciesAgentsItem_Available",
+    "ConvAiStoredSecretDependenciesAgentsItem_Unknown",
+    "ConvAiStoredSecretDependenciesToolsItem",
+    "ConvAiStoredSecretDependenciesToolsItem_Available",
+    "ConvAiStoredSecretDependenciesToolsItem_Unknown",
+    "ConvAiWebhooks",
+    "ConvAiWorkspaceStoredSecretConfig",
     "ConversationChargingCommonModel",
     "ConversationConfig",
     "ConversationConfigClientOverride",
     "ConversationConfigClientOverrideConfig",
+    "ConversationDeletionSettings",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryEvaluationCriteriaResultCommonModel",
     "ConversationHistoryFeedbackCommonModel",
@@ -273,6 +447,9 @@ __all__ = [
     "ConversationHistoryTranscriptToolResultCommonModel",
     "ConversationInitiationClientData",
     "ConversationInitiationClientDataConfig",
+    "ConversationInitiationClientDataDynamicVariablesValue",
+    "ConversationInitiationClientDataWebhook",
+    "ConversationInitiationClientDataWebhookRequestHeadersValue",
     "ConversationSignedUrlResponseModel",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
@@ -284,14 +461,20 @@ __all__ = [
     "Currency",
     "CustomLlm",
     "DataCollectionResultCommonModel",
+    "DeleteSampleResponseModel",
+    "DependentAvailableAgentIdentifier",
+    "DependentAvailableAgentIdentifierAccessLevel",
+    "DependentAvailableToolIdentifier",
+    "DependentAvailableToolIdentifierAccessLevel",
+    "DependentUnknownAgentIdentifier",
+    "DependentUnknownToolIdentifier",
     "DoDubbingResponse",
+    "DubbingMediaMetadata",
     "DubbingMetadataResponse",
+    "DynamicVariablesConfig",
+    "DynamicVariablesConfigDynamicVariablePlaceholdersValue",
+    "EditChapterResponseModel",
     "EditProjectResponseModel",
-    "EmbedConfig",
-    "EmbedConfigAvatar",
-    "EmbedConfigAvatar_Image",
-    "EmbedConfigAvatar_Orb",
-    "EmbedConfigAvatar_Url",
     "EmbedVariant",
     "EvaluationSettings",
     "EvaluationSuccessResult",
@@ -306,12 +489,26 @@ __all__ = [
     "GetAgentLinkResponseModel",
     "GetAgentResponseModel",
     "GetAgentsPageResponseModel",
+    "GetAudioNativeProjectSettingsResponseModel",
     "GetChaptersResponse",
+    "GetConvaiSettingsResponseModel",
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
     "GetConversationsPageResponseModel",
-    "GetKnowledgeBaseReponseModel",
-    "GetKnowledgeBaseReponseModelType",
+    "GetKnowledgeBaseDependentAgentsResponseModel",
+    "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem",
+    "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available",
+    "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Unknown",
+    "GetKnowledgeBaseListResponseModel",
+    "GetKnowledgeBaseResponseModel",
+    "GetKnowledgeBaseResponseModelAccessLevel",
+    "GetKnowledgeBaseResponseModelType",
+    "GetKnowledgeBaseSummaryResponseModel",
+    "GetKnowledgeBaseSummaryResponseModelAccessLevel",
+    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem",
+    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Available",
+    "GetKnowledgeBaseSummaryResponseModelDependentAgentsItem_Unknown",
+    "GetKnowledgeBaseSummaryResponseModelType",
     "GetLibraryVoicesResponse",
     "GetPhoneNumberResponseModel",
     "GetProjectsResponse",
@@ -319,6 +516,7 @@ __all__ = [
     "GetPronunciationDictionaryMetadataResponse",
     "GetSpeechHistoryResponse",
     "GetVoicesResponse",
+    "GetWorkspaceSecretsResponseModel",
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItem",
@@ -327,6 +525,8 @@ __all__ = [
     "Invoice",
     "KnowledgeBaseLocator",
     "KnowledgeBaseLocatorType",
+    "LanguagePreset",
+    "LanguagePresetTranslation",
     "LanguageResponse",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseModelCategory",
@@ -345,8 +545,17 @@ __all__ = [
     "ObjectJsonSchemaPropertyPropertiesValue",
     "OrbAvatar",
     "OutputFormat",
+    "PaginatedListedReviewTaskInstanceModel",
     "PhoneNumberAgentInfo",
+    "PodcastBulletinMode",
+    "PodcastBulletinModeData",
+    "PodcastConversationMode",
+    "PodcastConversationModeData",
+    "PodcastProjectResponseModel",
+    "PodcastTextSource",
+    "PodcastUrlSource",
     "PostAgentAvatarResponseModel",
+    "PostWorkspaceSecretResponseModel",
     "PrivacyConfig",
     "ProfilePageResponseModel",
     "ProjectCreationMetaResponseModel",
@@ -372,6 +581,7 @@ __all__ = [
     "PromptAgentOverrideConfig",
     "PromptAgentToolsItem",
     "PromptAgentToolsItem_Client",
+    "PromptAgentToolsItem_System",
     "PromptAgentToolsItem_Webhook",
     "PromptEvaluationCriteria",
     "PronunciationDictionaryAliasRuleRequestModel",
@@ -380,25 +590,58 @@ __all__ = [
     "PronunciationDictionaryVersionResponseModel",
     "PydanticPronunciationDictionaryVersionLocator",
     "QueryParamsJsonSchema",
+    "QuoteRequestModel",
+    "QuoteResponseModel",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
     "RecordingResponse",
     "RemovePronunciationDictionaryRulesResponseModel",
+    "ResourceAccessInfo",
+    "ResourceAccessInfoRole",
+    "ReviewState",
     "ReviewStatus",
-    "Safety",
+    "ReviewTaskInstanceResponseModel",
+    "SafetyCommonModel",
     "SafetyEvaluation",
+    "SafetyResponseModel",
     "SafetyRule",
+    "SecretDependencyType",
     "SpeechHistoryItemResponse",
     "SpeechHistoryItemResponseModelSource",
     "SpeechHistoryItemResponseModelVoiceCategory",
+    "SpeechToTextCharacterResponseModel",
+    "SpeechToTextChunkResponseModel",
+    "SpeechToTextWordResponseModel",
+    "SpeechToTextWordResponseModelType",
+    "StreamingAudioChunkWithTimestampsResponseModel",
     "Subscription",
     "SubscriptionResponse",
     "SubscriptionResponseModelBillingPeriod",
     "SubscriptionResponseModelCharacterRefreshPeriod",
     "SubscriptionResponseModelCurrency",
     "SubscriptionStatus",
+    "SubscriptionUsageResponseModel",
+    "SystemToolConfig",
+    "TagKind",
+    "TagModel",
+    "TaskInstanceEventKind",
+    "TaskInstanceEventResponseModel",
     "TelephonyProvider",
     "TextToSpeechAsStreamRequest",
+    "ToolRequestModel",
+    "ToolRequestModelToolConfig",
+    "ToolRequestModelToolConfig_Client",
+    "ToolRequestModelToolConfig_System",
+    "ToolRequestModelToolConfig_Webhook",
+    "ToolResponseModel",
+    "ToolResponseModelDependentAgentsItem",
+    "ToolResponseModelDependentAgentsItem_Available",
+    "ToolResponseModelDependentAgentsItem_Unknown",
+    "ToolResponseModelToolConfig",
+    "ToolResponseModelToolConfig_Client",
+    "ToolResponseModelToolConfig_System",
+    "ToolResponseModelToolConfig_Webhook",
+    "ToolsResponseModel",
     "TtsConversationalConfig",
     "TtsConversationalConfigOverride",
     "TtsConversationalConfigOverrideConfig",
@@ -415,6 +658,7 @@ __all__ = [
     "ValidationError",
     "ValidationErrorLocItem",
     "VerificationAttemptResponse",
+    "VerifiedVoiceLanguageResponseModel",
     "Voice",
     "VoiceGenerationParameterOptionResponse",
     "VoiceGenerationParameterResponse",
@@ -433,5 +677,17 @@ __all__ = [
     "WebhookToolApiSchemaConfigMethod",
     "WebhookToolApiSchemaConfigRequestHeadersValue",
     "WebhookToolConfig",
+    "WidgetConfig",
+    "WidgetConfigAvatar",
+    "WidgetConfigAvatar_Image",
+    "WidgetConfigAvatar_Orb",
+    "WidgetConfigAvatar_Url",
+    "WidgetConfigResponseModel",
+    "WidgetConfigResponseModelAvatar",
+    "WidgetConfigResponseModelAvatar_Image",
+    "WidgetConfigResponseModelAvatar_Orb",
+    "WidgetConfigResponseModelAvatar_Url",
+    "WidgetExpandable",
     "WidgetFeedbackMode",
+    "WorkspaceGroupByNameResponseModel",
 ]

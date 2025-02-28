@@ -20,7 +20,9 @@ class PromptAgent(UncheckedBaseModel):
     temperature: typing.Optional[float] = None
     max_tokens: typing.Optional[int] = None
     tools: typing.Optional[typing.List[PromptAgentToolsItem]] = None
+    tool_ids: typing.Optional[typing.List[str]] = None
     knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = None
+    knowledge_base_document_ids: typing.Optional[typing.List[str]] = None
     custom_llm: typing.Optional[CustomLlm] = None
 
     if IS_PYDANTIC_V2:

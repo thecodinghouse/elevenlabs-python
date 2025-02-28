@@ -7,6 +7,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
 from websockets.sync.client import connect
+from websockets.exceptions import ConnectionClosedOK
 
 from ..base_client import BaseElevenLabs
 
@@ -162,23 +163,25 @@ class ClientTools:
         asyncio.run_coroutine_threadsafe(_execute_and_callback(), self._loop)
 
 
-class ConversationConfig:
+class ConversationInitiationData:
     """Configuration options for the Conversation."""
 
     def __init__(
         self,
         extra_body: Optional[dict] = None,
         conversation_config_override: Optional[dict] = None,
+        dynamic_variables: Optional[dict] = None,
     ):
         self.extra_body = extra_body or {}
         self.conversation_config_override = conversation_config_override or {}
+        self.dynamic_variables = dynamic_variables or {}
 
 
 class Conversation:
     client: BaseElevenLabs
     agent_id: str
     requires_auth: bool
-    config: ConversationConfig
+    config: ConversationInitiationData
     audio_interface: AudioInterface
     client_tools: Optional[ClientTools]
     callback_agent_response: Optional[Callable[[str], None]]
@@ -198,7 +201,7 @@ class Conversation:
         *,
         requires_auth: bool,
         audio_interface: AudioInterface,
-        config: Optional[ConversationConfig] = None,
+        config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         callback_agent_response: Optional[Callable[[str], None]] = None,
         callback_agent_response_correction: Optional[Callable[[str, str], None]] = None,
@@ -228,7 +231,7 @@ class Conversation:
         self.requires_auth = requires_auth
         self.audio_interface = audio_interface
         self.callback_agent_response = callback_agent_response
-        self.config = config or ConversationConfig()
+        self.config = config or ConversationInitiationData()
         self.client_tools = client_tools or ClientTools()
         self.callback_agent_response_correction = callback_agent_response_correction
         self.callback_user_transcript = callback_user_transcript
@@ -269,25 +272,32 @@ class Conversation:
         return self._conversation_id
 
     def _run(self, ws_url: str):
-        with connect(ws_url) as ws:
+        with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             ws.send(
                 json.dumps(
                     {
                         "type": "conversation_initiation_client_data",
                         "custom_llm_extra_body": self.config.extra_body,
                         "conversation_config_override": self.config.conversation_config_override,
+                        "dynamic_variables": self.config.dynamic_variables,
                     }
                 )
             )
 
             def input_callback(audio):
-                ws.send(
-                    json.dumps(
-                        {
-                            "user_audio_chunk": base64.b64encode(audio).decode(),
-                        }
+                try:
+                    ws.send(
+                        json.dumps(
+                            {
+                                "user_audio_chunk": base64.b64encode(audio).decode(),
+                            }
+                        )
                     )
-                )
+                except ConnectionClosedOK:
+                    self.end_session()
+                except Exception as e:
+                    print(f"Error sending user audio chunk: {e}")
+                    self.end_session()
 
             self.audio_interface.start(input_callback)
             while not self._should_stop.is_set():
@@ -296,8 +306,13 @@ class Conversation:
                     if self._should_stop.is_set():
                         return
                     self._handle_message(message, ws)
+                except ConnectionClosedOK as e:
+                    self.end_session()
                 except TimeoutError:
                     pass
+                except Exception as e:
+                    print(f"Error receiving message: {e}")
+                    self.end_session()
 
     def _handle_message(self, message, ws):
         if message["type"] == "conversation_initiation_metadata":

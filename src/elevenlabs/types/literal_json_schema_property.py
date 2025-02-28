@@ -2,14 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class LiteralJsonSchemaProperty(UncheckedBaseModel):
     type: LiteralJsonSchemaPropertyType
-    description: str
+    description: typing.Optional[str] = None
+    dynamic_variable: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -1,4 +1,353 @@
 # Reference
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.claim_a_task_v_1_speech_to_text_reviews_tasks_task_id_claim_post(
+    task_id="task_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID task to claim.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.submit_a_completed_task_v_1_speech_to_text_reviews_producers_user_id_tasks_task_id_submit_put(
+    user_id="user_id",
+    task_id="task_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID task review to claim.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, TagModel
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.list_unclaimed_reviews_v_1_speech_to_text_reviews_tasks_post(
+    tags=[
+        [
+            TagModel(
+                kind="lang",
+                value="value",
+            )
+        ]
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tags:** `typing.Sequence[typing.Sequence[TagModel]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — The number of tasks to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Cursor for pagination, using the cursor from the previous page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**unclaimed_only:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_instances:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.list_tasks_instances_for_a_user_v_1_speech_to_text_reviews_producers_user_id_tasks_get(
+    user_id="user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — The number of tasks to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Cursor for pagination, using the cursor from the previous page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.<a href="src/elevenlabs/base_client.py">compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, QuoteRequestModel
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.compute_a_quote_for_a_asr_transcription_review_task_v_1_speech_to_text_reviews_get_quote_post(
+    request=QuoteRequestModel(
+        content_hash="content_hash",
+        duration_s=1.1,
+        speaker_count=1,
+        language="language",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `QuoteRequestModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## History
 <details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get_all</a>(...)</code></summary>
 <dl>
@@ -705,7 +1054,7 @@ client.text_to_speech.convert(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -746,7 +1095,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -778,7 +1127,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -786,7 +1135,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -794,7 +1143,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -802,7 +1151,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -850,7 +1199,7 @@ Defaults to None.
 <dl>
 <dd>
 
-Converts text into speech using a voice of your choice and returns JSON containing audio as a base64 encoded string together with information on when which character was spoken.
+Generate speech from text with precise character-level timing information for audio-text synchronization.
 </dd>
 </dl>
 </dd>
@@ -871,10 +1220,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.text_to_speech.convert_with_timestamps(
-    voice_id="JBFqnCBsd6RMkjVDRZzb",
-    output_format="mp3_44100_128",
-    text="The first move is what sets everything in motion.",
-    model_id="eleven_multilingual_v2",
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    text="This is a test for the API of ElevenLabs.",
 )
 
 ```
@@ -907,7 +1254,7 @@ client.text_to_speech.convert_with_timestamps(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -948,7 +1295,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -980,7 +1327,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -988,7 +1335,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -996,7 +1343,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1004,7 +1351,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1111,7 +1458,7 @@ client.text_to_speech.convert_as_stream(
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1152,7 +1499,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -1184,7 +1531,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1192,7 +1539,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1200,7 +1547,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1208,7 +1555,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1317,7 +1664,7 @@ for chunk in response:
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1358,7 +1705,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 supports language enforcement. For other models, an error will be returned if language code is provided.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model. Currently only Turbo v2.5 and Flash v2.5 support language enforcement. For other models, an error will be returned if language code is provided.
     
 </dd>
 </dl>
@@ -1390,7 +1737,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**previous_text:** `typing.Optional[str]` — The text that came before the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1398,7 +1745,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the flow of prosody when concatenating together multiple generations or to influence the prosody in the current generation.
+**next_text:** `typing.Optional[str]` — The text that comes after the text of the current request. Can be used to improve the speech's continuity when concatenating together multiple generations or to influence the speech's continuity in the current generation.
     
 </dd>
 </dl>
@@ -1406,7 +1753,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1414,7 +1761,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the flow of prosody when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1465,7 +1812,7 @@ Defaults to None.
 <dl>
 <dd>
 
-Create speech by combining the content and emotion of the uploaded audio with a voice of your choice.
+Transform audio from one voice to another. Maintain full control over emotion, timing and delivery.
 </dd>
 </dl>
 </dd>
@@ -1523,7 +1870,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -1612,7 +1959,7 @@ Defaults to None.
 <dl>
 <dd>
 
-Create speech by combining the content and emotion of the uploaded audio with a voice of your choice and returns an audio stream.
+Stream audio from one voice to another. Maintain full control over emotion, timing and delivery.
 </dd>
 </dl>
 </dd>
@@ -1670,7 +2017,7 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false full privacy mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Full privacy mode may only be used by enterprise customers.
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -2609,7 +2956,7 @@ client.voices.get(
 <dl>
 <dd>
 
-**with_settings:** `typing.Optional[bool]` — If set will return settings information corresponding to the voice, requires authorization.
+**with_settings:** `typing.Optional[bool]` — This parameter is now deprecated. It is ignored and will be removed in a future version.
     
 </dd>
 </dl>
@@ -3219,6 +3566,14 @@ client.voices.get_shared(
 <dl>
 <dd>
 
+**min_notice_period_days:** `typing.Optional[int]` — Filter voices with a minimum notice period of the given number of days.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **reader_app_enabled:** `typing.Optional[bool]` — Filter voices that are enabled for the reader app
     
 </dd>
@@ -3419,8 +3774,319 @@ client.voices.get_a_profile_page(
 </dl>
 </details>
 
+## Studio
+<details><summary><code>client.studio.<a href="src/elevenlabs/studio/client.py">create_podcast</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create and auto-convert a podcast project. Currently, the LLM cost is covered by us but you will still be charged for the audio generation. In the future, you will be charged for both the LLM and audio generation costs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    ElevenLabs,
+    PodcastConversationModeData,
+    PodcastTextSource,
+)
+from elevenlabs.studio import (
+    BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.create_podcast(
+    model_id="21m00Tcm4TlvDq8ikWAM",
+    mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
+        conversation=PodcastConversationModeData(
+            host_voice_id="host_voice_id",
+            guest_voice_id="guest_voice_id",
+        ),
+    ),
+    source=PodcastTextSource(
+        text="text",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model_id:** `str` — The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `BodyCreatePodcastV1StudioPodcastsPostMode` — The type of podcast to generate
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `BodyCreatePodcastV1StudioPodcastsPostSource` — The source content for the Podcast.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_preset:** `typing.Optional[BodyCreatePodcastV1StudioPodcastsPostQualityPreset]` 
+
+Output quality of the generated audio. Must be one of:
+standard - standard output format, 128kbps with 44.1kHz sample rate.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_scale:** `typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]` 
+
+Duration of the generated podcast. Must be one of:
+short - produces podcasts shorter than 3 minutes.
+default - produces podcasts roughly between 3-7 minutes.
+long - prodces podcasts longer than 7 minutes.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — An optional language of the Studio project. Two-letter language code (ISO 639-1).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**highlights:** `typing.Optional[typing.Sequence[str]]` — A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## projects
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_all</a>()</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">create_podcast</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create and auto-convert a podcast project. Currently, the LLM cost is covered by us but you will still be charged for the audio generation. In the future, you will be charged for both the LLM and audio generation costs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    ElevenLabs,
+    PodcastConversationModeData,
+    PodcastTextSource,
+)
+from elevenlabs.projects import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.create_podcast(
+    model_id="21m00Tcm4TlvDq8ikWAM",
+    mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(
+        conversation=PodcastConversationModeData(
+            host_voice_id="host_voice_id",
+            guest_voice_id="guest_voice_id",
+        ),
+    ),
+    source=PodcastTextSource(
+        text="text",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model_id:** `str` — The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `BodyCreatePodcastV1ProjectsPodcastCreatePostMode` — The type of podcast to generate
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `BodyCreatePodcastV1ProjectsPodcastCreatePostSource` — The source content for the Podcast.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_preset:** `typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset]` 
+
+Output quality of the generated audio. Must be one of:
+standard - standard output format, 128kbps with 44.1kHz sample rate.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_scale:** `typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]` 
+
+Duration of the generated podcast. Must be one of:
+short - produces podcasts shorter than 3 minutes.
+default - produces podcasts roughly between 3-7 minutes.
+long - prodces podcasts longer than 7 minutes.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — An optional language of the Studio project. Two-letter language code (ISO 639-1).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**highlights:** `typing.Optional[typing.Sequence[str]]` — A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_projects</a>()</code></summary>
 <dl>
 <dd>
 
@@ -3452,7 +4118,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.get_all()
+client.projects.get_projects()
 
 ```
 </dd>
@@ -3480,7 +4146,7 @@ client.projects.get_all()
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">add_project</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3512,7 +4178,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.add(
+client.projects.add_project(
     name="name",
     default_title_voice_id="default_title_voice_id",
     default_paragraph_voice_id="default_paragraph_voice_id",
@@ -3533,7 +4199,7 @@ client.projects.add(
 <dl>
 <dd>
 
-**name:** `str` — The name of the project, used for identification only.
+**name:** `str` — The name of the Studio project, used for identification only.
     
 </dd>
 </dl>
@@ -3557,7 +4223,7 @@ client.projects.add(
 <dl>
 <dd>
 
-**default_model_id:** `str` — The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+**default_model_id:** `str` — The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
     
 </dd>
 </dl>
@@ -3565,7 +4231,7 @@ client.projects.add(
 <dl>
 <dd>
 
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -3598,7 +4264,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+**title:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
     
 </dd>
 </dl>
@@ -3606,7 +4272,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**author:** `typing.Optional[str]` — An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+**author:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
     
 </dd>
 </dl>
@@ -3614,7 +4280,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — An optional description of the project.
+**description:** `typing.Optional[str]` — An optional description of the Studio project.
     
 </dd>
 </dl>
@@ -3622,7 +4288,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**genres:** `typing.Optional[typing.List[str]]` — An optional list of genres associated with the project.
+**genres:** `typing.Optional[typing.List[str]]` — An optional list of genres associated with the Studio project.
     
 </dd>
 </dl>
@@ -3630,7 +4296,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**target_audience:** `typing.Optional[ProjectsAddRequestTargetAudience]` — An optional target audience of the project.
+**target_audience:** `typing.Optional[AddProjectV1ProjectsAddPostRequestTargetAudience]` — An optional target audience of the Studio project.
     
 </dd>
 </dl>
@@ -3638,7 +4304,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**language:** `typing.Optional[str]` — An optional language of the project. Two-letter language code (ISO 639-1).
+**language:** `typing.Optional[str]` — An optional language of the Studio project. Two-letter language code (ISO 639-1).
     
 </dd>
 </dl>
@@ -3646,7 +4312,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**content_type:** `typing.Optional[str]` — An optional content type of the project.
+**content_type:** `typing.Optional[str]` — An optional content type of the Studio project.
     
 </dd>
 </dl>
@@ -3654,7 +4320,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**original_publication_date:** `typing.Optional[str]` — An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+**original_publication_date:** `typing.Optional[str]` — An optional original publication date of the Studio project, in the format YYYY-MM-DD or YYYY.
     
 </dd>
 </dl>
@@ -3662,7 +4328,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**mature_content:** `typing.Optional[bool]` — An optional mature content of the project.
+**mature_content:** `typing.Optional[bool]` — An optional specification of whether this Studio project contains mature content.
     
 </dd>
 </dl>
@@ -3670,7 +4336,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**isbn_number:** `typing.Optional[str]` — An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+**isbn_number:** `typing.Optional[str]` — An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
     
 </dd>
 </dl>
@@ -3678,7 +4344,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**acx_volume_normalization:** `typing.Optional[bool]` — [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+**acx_volume_normalization:** `typing.Optional[bool]` — [Deprecated] When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
     
 </dd>
 </dl>
@@ -3686,7 +4352,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**volume_normalization:** `typing.Optional[bool]` — When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+**volume_normalization:** `typing.Optional[bool]` — When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
     
 </dd>
 </dl>
@@ -3694,7 +4360,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
     
 </dd>
 </dl>
@@ -3702,7 +4368,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**fiction:** `typing.Optional[ProjectsAddRequestFiction]` — An optional fiction of the project.
+**fiction:** `typing.Optional[AddProjectV1ProjectsAddPostRequestFiction]` — An optional specification of whether the content of this Studio project is fiction.
     
 </dd>
 </dl>
@@ -3710,7 +4376,30 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+**apply_text_normalization:** `typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization]` 
+
+
+    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+    When set to 'auto', the system will automatically decide whether to apply text normalization 
+    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while 
+    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+    
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the Studio project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_assign_voices:** `typing.Optional[bool]` — [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
     
 </dd>
 </dl>
@@ -3730,7 +4419,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_project_by_id</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3742,7 +4431,7 @@ ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate
 <dl>
 <dd>
 
-Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
+Returns information about a specific project. This endpoint returns more detailed information about a project than `GET /v1/projects`.
 </dd>
 </dl>
 </dd>
@@ -3762,7 +4451,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.get(
+client.projects.get_project_by_id(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -3780,7 +4469,7 @@ client.projects.get(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -3834,9 +4523,9 @@ client = ElevenLabs(
 )
 client.projects.edit_basic_project_info(
     project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-    default_title_voice_id="default_title_voice_id",
-    default_paragraph_voice_id="default_paragraph_voice_id",
+    name="Project 1",
+    default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+    default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
 )
 
 ```
@@ -3853,7 +4542,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -3861,7 +4550,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**name:** `str` — The name of the project, used for identification only.
+**name:** `str` — The name of the Studio project, used for identification only.
     
 </dd>
 </dl>
@@ -3885,7 +4574,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+**title:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
     
 </dd>
 </dl>
@@ -3893,7 +4582,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**author:** `typing.Optional[str]` — An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+**author:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
     
 </dd>
 </dl>
@@ -3901,7 +4590,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**isbn_number:** `typing.Optional[str]` — An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+**isbn_number:** `typing.Optional[str]` — An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
     
 </dd>
 </dl>
@@ -3909,15 +4598,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-**volume_normalization:** `typing.Optional[bool]` — When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality_check_on:** `typing.Optional[bool]` — Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+**volume_normalization:** `typing.Optional[bool]` — When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
     
 </dd>
 </dl>
@@ -3937,7 +4618,7 @@ client.projects.edit_basic_project_info(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">delete_project</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3949,7 +4630,7 @@ client.projects.edit_basic_project_info(
 <dl>
 <dd>
 
-Delete a project by its project_id.
+Deletes a project.
 </dd>
 </dl>
 </dd>
@@ -3969,7 +4650,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.delete(
+client.projects.delete_project(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -3987,7 +4668,7 @@ client.projects.delete(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -4007,7 +4688,103 @@ client.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">edit_project_content</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edits project content.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.edit_project_content(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the Studio project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">convert_project</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4039,7 +4816,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.convert(
+client.projects.convert_project(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -4057,7 +4834,7 @@ client.projects.convert(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -4077,7 +4854,7 @@ client.projects.convert(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_snapshots</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_project_snapshots</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4109,7 +4886,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.get_snapshots(
+client.projects.get_project_snapshots(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -4127,7 +4904,7 @@ client.projects.get_snapshots(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -4147,7 +4924,7 @@ client.projects.get_snapshots(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">stream_archive</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">streams_archive_with_project_audio</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4179,7 +4956,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.projects.stream_archive(
+client.projects.streams_archive_with_project_audio(
     project_id="21m00Tcm4TlvDq8ikWAM",
     project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -4198,7 +4975,7 @@ client.projects.stream_archive(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -4206,7 +4983,671 @@ client.projects.stream_archive(
 <dl>
 <dd>
 
-**project_snapshot_id:** `str` — The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+**project_snapshot_id:** `str` — The ID of the Studio project snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_chapters</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of your chapters for a project together and its metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.get_chapters(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">get_chapter_by_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns information about a specific chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.get_chapter_by_id(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">delete_chapter</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.delete_chapter(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">edit_chapter</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edits a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.edit_chapter(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `typing.Optional[ChapterContentInputModel]` — The chapter content to use.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">add_chapter_to_a_project</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new chapter either as blank or from a URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.add_chapter_to_a_project(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    name="Chapter 1",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">convert_chapter</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts conversion of a specific chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.convert_chapter(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">list_chapter_snapshots</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.list_chapter_snapshots(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/elevenlabs/projects/client.py">stream_chapter_audio</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stream_chapter_audio(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_snapshot_id:** `str` — The ID of the chapter snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
     
 </dd>
 </dl>
@@ -4282,7 +5723,7 @@ client.projects.update_pronunciation_dictionaries(
 <dl>
 <dd>
 
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+**project_id:** `str` — The ID of the Studio project.
     
 </dd>
 </dl>
@@ -4290,7 +5731,7 @@ client.projects.update_pronunciation_dictionaries(
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Sequence[PronunciationDictionaryVersionLocator]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+**pronunciation_dictionary_locators:** `typing.Sequence[PronunciationDictionaryVersionLocator]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
     
 </dd>
 </dl>
@@ -4298,569 +5739,7 @@ client.projects.update_pronunciation_dictionaries(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Chapters
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">get_all</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of your chapters for a project together and its metadata.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.get_all(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns information about a specific chapter.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.get(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    chapter_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a chapter by its chapter_id.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.delete(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    chapter_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new chapter either as blank or from a URL.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.create(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` — The name of the chapter, used for identification only.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">convert</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Starts conversion of a specific chapter.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.convert(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    chapter_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">get_all_snapshots</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.get_all_snapshots(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    chapter_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.chapters.<a href="src/elevenlabs/chapters/client.py">stream_snapshot</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.chapters.stream_snapshot(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    chapter_id="21m00Tcm4TlvDq8ikWAM",
-    chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chapter_id:** `str` — The chapter_id of the chapter. You can query GET https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list all available chapters for a project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**chapter_snapshot_id:** `str` — The chapter_snapshot_id of the chapter snapshot. You can query GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all available snapshots for a chapter.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
+**invalidate_affected_text:** `typing.Optional[bool]` — This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
     
 </dd>
 </dl>
@@ -5388,7 +6267,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**image:** `typing.Optional[str]` — Image URL used in the player. If not provided, default image set in the Player settings is used.
+**image:** `typing.Optional[str]` — (Deprecated) Image URL used in the player. If not provided, default image set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5412,7 +6291,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**small:** `typing.Optional[bool]` — Whether to use small player or not. If not provided, default value set in the Player settings is used.
+**small:** `typing.Optional[bool]` — (Deprecated) Whether to use small player or not. If not provided, default value set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5436,7 +6315,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**sessionization:** `typing.Optional[int]` — Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+**sessionization:** `typing.Optional[int]` — (Deprecated) Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5471,6 +6350,172 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">get_settings</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get player settings for the specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_native.get_settings(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates content for the specific AudioNative Project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.audio_native.update_content(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_publish:** `typing.Optional[bool]` — Whether to auto publish the new project snapshot after it's converted.
     
 </dd>
 </dl>
@@ -5712,7 +6757,7 @@ Add rules to the pronunciation dictionary
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.pronunciation_dictionary import (
-    PronunciationDictionaryRule_Phoneme,
+    PronunciationDictionaryRule_Alias,
 )
 
 client = ElevenLabs(
@@ -5721,10 +6766,9 @@ client = ElevenLabs(
 client.pronunciation_dictionary.add_rules(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
-        PronunciationDictionaryRule_Phoneme(
-            string_to_replace="rules",
-            phoneme="rules",
-            alphabet="rules",
+        PronunciationDictionaryRule_Alias(
+            string_to_replace="string_to_replace",
+            alias="alias",
         )
     ],
 )
@@ -6082,6 +7126,234 @@ client.pronunciation_dictionary.get_all(
 </details>
 
 ## Workspace
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">search_user_groups</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches for user groups in the workspace. Multiple or no groups may be returned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.search_user_groups(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — Name of the group to find.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">delete_member_from_user_group</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes a member from the specified group. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.delete_member_from_user_group(
+    group_id="group_id",
+    email="email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**group_id:** `str` — The ID of the target group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `str` — The email of the target workspace member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">add_member_to_user_group</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Adds a member of your workspace to the specified group. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.add_member_to_user_group(
+    group_id="group_id",
+    email="email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**group_id:** `str` — The ID of the target group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `str` — The email of the target workspace member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">invite_user</a>(...)</code></summary>
 <dl>
 <dd>
@@ -6094,7 +7366,7 @@ client.pronunciation_dictionary.get_all(
 <dl>
 <dd>
 
-Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+Sends an email invitation to join your workspace to the provided email. If the user doesn't have an account they will be prompted to create one. If the user accepts this invite they will be added as a user to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators. If the user is already in the workspace a 400 error will be returned.
 </dd>
 </dl>
 </dd>
@@ -6115,7 +7387,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.workspace.invite_user(
-    email="email",
+    email="john.doe@testmail.com",
 )
 
 ```
@@ -6132,7 +7404,93 @@ client.workspace.invite_user(
 <dl>
 <dd>
 
-**email:** `str` — Email of the target user.
+**email:** `str` — The email of the customer
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">invite_multiple_users</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sends email invitations to join your workspace to the provided emails. Requires all email addresses to be part of a verified domain. If the users don't have an account they will be prompted to create one. If the users accept these invites they will be added as users to your workspace and your subscription using one of your seats. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.invite_multiple_users(
+    emails=["emails"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**emails:** `typing.Sequence[str]` — The email of the customer
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
     
 </dd>
 </dl>
@@ -6185,7 +7543,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.workspace.delete_existing_invitation(
-    email="email",
+    email="john.doe@testmail.com",
 )
 
 ```
@@ -6202,7 +7560,7 @@ client.workspace.delete_existing_invitation(
 <dl>
 <dd>
 
-**email:** `str` — Email of the target user.
+**email:** `str` — The email of the customer
     
 </dd>
 </dl>
@@ -6289,6 +7647,127 @@ client.workspace.update_member(
 <dd>
 
 **workspace_role:** `typing.Optional[BodyUpdateMemberV1WorkspaceMembersPostWorkspaceRole]` — Role dictating permissions in the workspace.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## SpeechToText
+<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transcribe an audio or video file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.speech_to_text.convert(
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model_id:** `str` — The ID of the model to use for transcription, currently only 'scribe_v1' is available.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+core.File` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_code:** `typing.Optional[str]` — An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag_audio_events:** `typing.Optional[bool]` — Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**num_speakers:** `typing.Optional[int]` — The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timestamps_granularity:** `typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]` — The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**diarize:** `typing.Optional[bool]` — Whether to annotate which speaker is currently talking in the uploaded file. Enabling this will limit the maximum duration of your inputs to 8 minutes.
     
 </dd>
 </dl>
@@ -6437,7 +7916,15 @@ client.conversational_ai.create_agent(
 <dl>
 <dd>
 
-**platform_settings:** `typing.Optional[AgentPlatformSettings]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+**use_tool_ids:** `typing.Optional[bool]` — Use tool ids instead of tools specs from request payload.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
     
 </dd>
 </dl>
@@ -6656,6 +8143,14 @@ client.conversational_ai.update_agent(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_tool_ids:** `typing.Optional[bool]` — Use tool ids instead of tools specs from request payload.
     
 </dd>
 </dl>
@@ -6939,85 +8434,6 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_agent_knowledge_base_document_by_id</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get details about a specific documentation making up the agent's knowledge base
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.get_agent_knowledge_base_document_by_id(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
-    documentation_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**documentation_id:** `str` — The id of a document from the agent's knowledge base. This is returned on document addition.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_agent_secret</a>(...)</code></summary>
 <dl>
 <dd>
@@ -7052,8 +8468,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.add_agent_secret(
     agent_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-    secret_value="secret_value",
+    name="MY API KEY",
+    secret_value="sk_api_12354abc",
 )
 
 ```
@@ -7087,94 +8503,6 @@ client.conversational_ai.add_agent_secret(
 <dd>
 
 **secret_value:** `str` — A value to be encrypted and used by the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_agent_knowledge_base</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Uploads a file or reference a webpage for the agent to use as part of it's knowledge base
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.add_to_agent_knowledge_base(
-    agent_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
     
 </dd>
 </dl>
@@ -8020,6 +9348,2848 @@ client.conversational_ai.get_phone_numbers()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_knowledge_base_list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of available knowledge base documents
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_knowledge_base_list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — If specified, the endpoint returns only such knowledge base documents whose names start with this string.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_only_owned_documents:** `typing.Optional[bool]` — If set to true, the endpoint will return only documents owned by you (and not shared from somebody else).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_typesense:** `typing.Optional[bool]` — If set to true, the endpoint will use typesense DB to search for the documents).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_knowledge_base</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads a file or reference a webpage to use as part of the shared knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_to_knowledge_base()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_knowledge_base_document_by_id</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific documentation making up the agent's knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_knowledge_base_document_by_id(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_knowledge_base_document</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a document from the knowledge base
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.delete_knowledge_base_document(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_dependent_agents</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of agents depending on this knowledge base document
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_dependent_agents(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_tools</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all available tools available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_tools()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a new tool to the available tools in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    ElevenLabs,
+    ToolRequestModel,
+    ToolRequestModelToolConfig_Webhook,
+    WebhookToolApiSchemaConfig,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.add_tool(
+    request=ToolRequestModel(
+        tool_config=ToolRequestModelToolConfig_Webhook(
+            name="name",
+            description="description",
+            api_schema=WebhookToolApiSchemaConfig(
+                url="url",
+            ),
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ToolRequestModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get tool that is available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_tool(
+    tool_id="tool_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">remove_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete tool from the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.remove_tool(
+    tool_id="tool_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_tool</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update tool that is available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import (
+    ElevenLabs,
+    ToolRequestModel,
+    ToolRequestModelToolConfig_Webhook,
+    WebhookToolApiSchemaConfig,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_tool(
+    tool_id="tool_id",
+    request=ToolRequestModel(
+        tool_config=ToolRequestModelToolConfig_Webhook(
+            name="name",
+            description="description",
+            api_schema=WebhookToolApiSchemaConfig(
+                url="url",
+            ),
+        ),
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `ToolRequestModel` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_settings</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve Convai settings for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_settings()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">update_settings</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update Convai settings for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.conversational_ai import (
+    PatchConvaiSettingsRequestSecretsItem_New,
+)
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.update_settings(
+    secrets=[
+        PatchConvaiSettingsRequestSecretsItem_New(
+            name="name",
+            value="value",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**secrets:** `typing.Sequence[PatchConvaiSettingsRequestSecretsItem]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_initiation_client_data_webhook:** `typing.Optional[ConversationInitiationClientDataWebhook]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhooks:** `typing.Optional[ConvAiWebhooks]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_secrets</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all secrets for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.get_secrets()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">create_secret</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new secret for the workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.create_secret(
+    name="name",
+    value="value",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**value:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Studio Projects
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get_all</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of your Studio projects with metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.get_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">add</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new Studio project, it can be either initialized as blank, from a document or from a URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.add(
+    name="name",
+    default_title_voice_id="default_title_voice_id",
+    default_paragraph_voice_id="default_paragraph_voice_id",
+    default_model_id="default_model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the Studio project, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_title_voice_id:** `str` — The voice_id that corresponds to the default voice used for new titles.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_paragraph_voice_id:** `str` — The voice_id that corresponds to the default voice used for new paragraphs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_model_id:** `str` — The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**quality_preset:** `typing.Optional[str]` 
+
+Output quality of the generated audio. Must be one of:
+standard - standard output format, 128kbps with 44.1kHz sample rate.
+high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**author:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — An optional description of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**genres:** `typing.Optional[typing.List[str]]` — An optional list of genres associated with the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_audience:** `typing.Optional[ProjectsAddRequestTargetAudience]` — An optional target audience of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — An optional language of the Studio project. Two-letter language code (ISO 639-1).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content_type:** `typing.Optional[str]` — An optional content type of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**original_publication_date:** `typing.Optional[str]` — An optional original publication date of the Studio project, in the format YYYY-MM-DD or YYYY.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mature_content:** `typing.Optional[bool]` — An optional specification of whether this Studio project contains mature content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isbn_number:** `typing.Optional[str]` — An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**acx_volume_normalization:** `typing.Optional[bool]` — [Deprecated] When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume_normalization:** `typing.Optional[bool]` — When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**callback_url:** `typing.Optional[str]` — A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fiction:** `typing.Optional[ProjectsAddRequestFiction]` — An optional specification of whether the content of this Studio project is fiction.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[ProjectsAddRequestApplyTextNormalization]` 
+
+
+    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+    When set to 'auto', the system will automatically decide whether to apply text normalization 
+    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while 
+    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+    
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the Studio project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_assign_voices:** `typing.Optional[bool]` — [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns information about a specific Studio project. This endpoint returns more detailed information about a project than `GET /v1/studio`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.get(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">update_metadata</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates Studio project metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.update_metadata(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    name="Project 1",
+    default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+    default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the Studio project, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_title_voice_id:** `str` — The voice_id that corresponds to the default voice used for new titles.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_paragraph_voice_id:** `str` — The voice_id that corresponds to the default voice used for new paragraphs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**author:** `typing.Optional[str]` — An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**isbn_number:** `typing.Optional[str]` — An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**volume_normalization:** `typing.Optional[bool]` — When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a Studio project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.delete(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">update_content</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates Studio project content.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.update_content(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_document:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the Studio project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">convert</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts conversion of a Studio project and all of its chapters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.convert(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get_snapshots</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the snapshots of a Studio project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.get_snapshots(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">stream_audio</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream the audio from a Studio project snapshot.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.stream_audio(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_snapshot_id:** `str` — The ID of the Studio project snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">stream_archive</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a compressed archive of the Studio project's audio.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.stream_archive(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_snapshot_id:** `str` — The ID of the Studio project snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">update_pronunciation_dictionaries</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a set of pronunciation dictionaries acting on a project. This will automatically mark text within this project as requiring reconverting where the new dictionary would apply or the old one no longer does.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, PronunciationDictionaryVersionLocator
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.projects.update_pronunciation_dictionaries(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    pronunciation_dictionary_locators=[
+        PronunciationDictionaryVersionLocator(
+            pronunciation_dictionary_id="pronunciation_dictionary_id",
+            version_id="version_id",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pronunciation_dictionary_locators:** `typing.Sequence[PronunciationDictionaryVersionLocator]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**invalidate_affected_text:** `typing.Optional[bool]` — This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Studio Chapters
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">get_all</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of a Studio project's chapters.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.get_all(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new chapter either as blank or from a URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.create(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    name="Chapter 1",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_url:** `typing.Optional[str]` — An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns information about a specific chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.get(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">edit</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.edit(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — The name of the chapter, used for identification only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `typing.Optional[ChapterContentInputModel]` — The chapter content to use.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.delete(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">convert</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts conversion of a specific chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.convert(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">get_all_snapshots</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.get_all_snapshots(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.studio.chapters.<a href="src/elevenlabs/studio/chapters/client.py">stream_snapshot</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream the audio from a chapter snapshot. Use `GET /v1/studio/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the snapshots of a chapter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.studio.chapters.stream_snapshot(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_id="21m00Tcm4TlvDq8ikWAM",
+    chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_id:** `str` — The ID of the chapter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chapter_snapshot_id:** `str` — The ID of the chapter snapshot.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**convert_to_mpeg:** `typing.Optional[bool]` — Whether to convert the audio to mpeg format.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

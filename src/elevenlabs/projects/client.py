@@ -2,23 +2,47 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .types.body_create_podcast_v_1_projects_podcast_create_post_mode import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
+)
+from .types.body_create_podcast_v_1_projects_podcast_create_post_source import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
+)
+from .types.body_create_podcast_v_1_projects_podcast_create_post_quality_preset import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset,
+)
+from .types.body_create_podcast_v_1_projects_podcast_create_post_duration_scale import (
+    BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale,
+)
 from ..core.request_options import RequestOptions
-from ..types.get_projects_response import GetProjectsResponse
+from ..types.podcast_project_response_model import PodcastProjectResponseModel
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.http_validation_error import HttpValidationError
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.get_projects_response import GetProjectsResponse
 from .. import core
-from .types.projects_add_request_target_audience import ProjectsAddRequestTargetAudience
-from .types.projects_add_request_fiction import ProjectsAddRequestFiction
+from .types.add_project_v_1_projects_add_post_request_target_audience import (
+    AddProjectV1ProjectsAddPostRequestTargetAudience,
+)
+from .types.add_project_v_1_projects_add_post_request_fiction import AddProjectV1ProjectsAddPostRequestFiction
+from .types.add_project_v_1_projects_add_post_request_apply_text_normalization import (
+    AddProjectV1ProjectsAddPostRequestApplyTextNormalization,
+)
 from ..types.add_project_response_model import AddProjectResponseModel
 from ..types.project_extended_response_model import ProjectExtendedResponseModel
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.edit_project_response_model import EditProjectResponseModel
 from ..types.project_snapshots_response import ProjectSnapshotsResponse
+from ..types.get_chapters_response import GetChaptersResponse
+from ..types.chapter_with_content_response_model import ChapterWithContentResponseModel
+from ..types.chapter_content_input_model import ChapterContentInputModel
+from ..types.edit_chapter_response_model import EditChapterResponseModel
+from ..types.add_chapter_response_model import AddChapterResponseModel
+from ..types.chapter_snapshots_response import ChapterSnapshotsResponse
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
-from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -29,7 +53,140 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
+    def create_podcast(
+        self,
+        *,
+        model_id: str,
+        mode: BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
+        source: BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
+        quality_preset: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset] = OMIT,
+        duration_scale: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        highlights: typing.Optional[typing.Sequence[str]] = OMIT,
+        callback_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PodcastProjectResponseModel:
+        """
+        Create and auto-convert a podcast project. Currently, the LLM cost is covered by us but you will still be charged for the audio generation. In the future, you will be charged for both the LLM and audio generation costs.
+
+        Parameters
+        ----------
+        model_id : str
+            The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
+
+        mode : BodyCreatePodcastV1ProjectsPodcastCreatePostMode
+            The type of podcast to generate
+
+        source : BodyCreatePodcastV1ProjectsPodcastCreatePostSource
+            The source content for the Podcast.
+
+        quality_preset : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset]
+            Output quality of the generated audio. Must be one of:
+            standard - standard output format, 128kbps with 44.1kHz sample rate.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+
+        duration_scale : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]
+            Duration of the generated podcast. Must be one of:
+            short - produces podcasts shorter than 3 minutes.
+            default - produces podcasts roughly between 3-7 minutes.
+            long - prodces podcasts longer than 7 minutes.
+
+
+        language : typing.Optional[str]
+            An optional language of the Studio project. Two-letter language code (ISO 639-1).
+
+        highlights : typing.Optional[typing.Sequence[str]]
+            A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
+
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PodcastProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import (
+            ElevenLabs,
+            PodcastConversationModeData,
+            PodcastTextSource,
+        )
+        from elevenlabs.projects import (
+            BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.create_podcast(
+            model_id="21m00Tcm4TlvDq8ikWAM",
+            mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(
+                conversation=PodcastConversationModeData(
+                    host_voice_id="host_voice_id",
+                    guest_voice_id="guest_voice_id",
+                ),
+            ),
+            source=PodcastTextSource(
+                text="text",
+            ),
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/projects/podcast/create",
+            method="POST",
+            json={
+                "model_id": model_id,
+                "mode": convert_and_respect_annotation_metadata(
+                    object_=mode, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostMode, direction="write"
+                ),
+                "source": convert_and_respect_annotation_metadata(
+                    object_=source, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostSource, direction="write"
+                ),
+                "quality_preset": quality_preset,
+                "duration_scale": duration_scale,
+                "language": language,
+                "highlights": highlights,
+                "callback_url": callback_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PodcastProjectResponseModel,
+                    construct_type(
+                        type_=PodcastProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_projects(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
         """
         Returns a list of your projects together and its metadata.
 
@@ -50,7 +207,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.get_all()
+        client.projects.get_projects()
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects",
@@ -81,7 +238,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def add(
+    def add_project(
         self,
         *,
         name: str,
@@ -95,7 +252,7 @@ class ProjectsClient:
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         genres: typing.Optional[typing.List[str]] = OMIT,
-        target_audience: typing.Optional[ProjectsAddRequestTargetAudience] = OMIT,
+        target_audience: typing.Optional[AddProjectV1ProjectsAddPostRequestTargetAudience] = OMIT,
         language: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         original_publication_date: typing.Optional[str] = OMIT,
@@ -104,8 +261,10 @@ class ProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
-        fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
+        fiction: typing.Optional[AddProjectV1ProjectsAddPostRequestFiction] = OMIT,
+        apply_text_normalization: typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        auto_assign_voices: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -114,7 +273,7 @@ class ProjectsClient:
         Parameters
         ----------
         name : str
-            The name of the project, used for identification only.
+            The name of the Studio project, used for identification only.
 
         default_title_voice_id : str
             The voice_id that corresponds to the default voice used for new titles.
@@ -123,10 +282,10 @@ class ProjectsClient:
             The voice_id that corresponds to the default voice used for new paragraphs.
 
         default_model_id : str
-            The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+            The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
         from_document : typing.Optional[core.File]
             See core.File for more documentation
@@ -140,49 +299,60 @@ class ProjectsClient:
 
 
         title : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         author : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         description : typing.Optional[str]
-            An optional description of the project.
+            An optional description of the Studio project.
 
         genres : typing.Optional[typing.List[str]]
-            An optional list of genres associated with the project.
+            An optional list of genres associated with the Studio project.
 
-        target_audience : typing.Optional[ProjectsAddRequestTargetAudience]
-            An optional target audience of the project.
+        target_audience : typing.Optional[AddProjectV1ProjectsAddPostRequestTargetAudience]
+            An optional target audience of the Studio project.
 
         language : typing.Optional[str]
-            An optional language of the project. Two-letter language code (ISO 639-1).
+            An optional language of the Studio project. Two-letter language code (ISO 639-1).
 
         content_type : typing.Optional[str]
-            An optional content type of the project.
+            An optional content type of the Studio project.
 
         original_publication_date : typing.Optional[str]
-            An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+            An optional original publication date of the Studio project, in the format YYYY-MM-DD or YYYY.
 
         mature_content : typing.Optional[bool]
-            An optional mature content of the project.
+            An optional specification of whether this Studio project contains mature content.
 
         isbn_number : typing.Optional[str]
-            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         acx_volume_normalization : typing.Optional[bool]
-            [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            [Deprecated] When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         volume_normalization : typing.Optional[bool]
-            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
-            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
-        fiction : typing.Optional[ProjectsAddRequestFiction]
-            An optional fiction of the project.
+        fiction : typing.Optional[AddProjectV1ProjectsAddPostRequestFiction]
+            An optional specification of whether the content of this Studio project is fiction.
 
-        quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+        apply_text_normalization : typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the Studio project to audio or not.
+
+        auto_assign_voices : typing.Optional[bool]
+            [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -199,7 +369,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.add(
+        client.projects.add_project(
             name="name",
             default_title_voice_id="default_title_voice_id",
             default_paragraph_voice_id="default_paragraph_voice_id",
@@ -230,7 +400,9 @@ class ProjectsClient:
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
                 "fiction": fiction,
-                "quality_check_on": quality_check_on,
+                "apply_text_normalization": apply_text_normalization,
+                "auto_convert": auto_convert,
+                "auto_assign_voices": auto_assign_voices,
             },
             files={
                 "from_document": from_document,
@@ -262,16 +434,16 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
+    def get_project_by_id(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectExtendedResponseModel:
         """
-        Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
+        Returns information about a specific project. This endpoint returns more detailed information about a project than `GET /v1/projects`.
 
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -288,7 +460,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.get(
+        client.projects.get_project_by_id(
             project_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -332,7 +504,6 @@ class ProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -341,10 +512,10 @@ class ProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         name : str
-            The name of the project, used for identification only.
+            The name of the Studio project, used for identification only.
 
         default_title_voice_id : str
             The voice_id that corresponds to the default voice used for new titles.
@@ -353,19 +524,16 @@ class ProjectsClient:
             The voice_id that corresponds to the default voice used for new paragraphs.
 
         title : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         author : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         isbn_number : typing.Optional[str]
-            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         volume_normalization : typing.Optional[bool]
-            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
-
-        quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+            When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -384,9 +552,9 @@ class ProjectsClient:
         )
         client.projects.edit_basic_project_info(
             project_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
-            default_title_voice_id="default_title_voice_id",
-            default_paragraph_voice_id="default_paragraph_voice_id",
+            name="Project 1",
+            default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+            default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -400,7 +568,6 @@ class ProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
-                "quality_check_on": quality_check_on,
             },
             headers={
                 "content-type": "application/json",
@@ -432,16 +599,16 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
+    def delete_project(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
-        Delete a project by its project_id.
+        Deletes a project.
 
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -458,7 +625,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.delete(
+        client.projects.delete_project(
             project_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -491,7 +658,89 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def convert(
+    def edit_project_content(
+        self,
+        project_id: str,
+        *,
+        from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditProjectResponseModel:
+        """
+        Edits project content.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the Studio project to audio or not.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.edit_project_content(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/content",
+            method="POST",
+            data={
+                "from_url": from_url,
+                "auto_convert": auto_convert,
+            },
+            files={
+                "from_document": from_document,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditProjectResponseModel,
+                    construct_type(
+                        type_=EditProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def convert_project(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
@@ -500,7 +749,7 @@ class ProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -517,7 +766,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.convert(
+        client.projects.convert_project(
             project_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -550,7 +799,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_snapshots(
+    def get_project_snapshots(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectSnapshotsResponse:
         """
@@ -559,7 +808,7 @@ class ProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -576,7 +825,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.get_snapshots(
+        client.projects.get_project_snapshots(
             project_id="21m00Tcm4TlvDq8ikWAM",
         )
         """
@@ -609,7 +858,7 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def stream_audio(
+    def stream_project_audio(
         self,
         project_id: str,
         project_snapshot_id: str,
@@ -623,10 +872,10 @@ class ProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         project_snapshot_id : str
-            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+            The ID of the Studio project snapshot.
 
         convert_to_mpeg : typing.Optional[bool]
             Whether to convert the audio to mpeg format.
@@ -673,7 +922,7 @@ class ProjectsClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def stream_archive(
+    def streams_archive_with_project_audio(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -682,10 +931,10 @@ class ProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         project_snapshot_id : str
-            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+            The ID of the Studio project snapshot.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -701,7 +950,7 @@ class ProjectsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.projects.stream_archive(
+        client.projects.streams_archive_with_project_audio(
             project_id="21m00Tcm4TlvDq8ikWAM",
             project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
         )
@@ -729,11 +978,563 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_chapters(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetChaptersResponse:
+        """
+        Returns a list of your chapters for a project together and its metadata.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetChaptersResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.get_chapters(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetChaptersResponse,
+                    construct_type(
+                        type_=GetChaptersResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_chapter_by_id(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ChapterWithContentResponseModel:
+        """
+        Returns information about a specific chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterWithContentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.get_chapter_by_id(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChapterWithContentResponseModel,
+                    construct_type(
+                        type_=ChapterWithContentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_chapter(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Deletes a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.delete_chapter(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def edit_chapter(
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[ChapterContentInputModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditChapterResponseModel:
+        """
+        Edits a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        name : typing.Optional[str]
+            The name of the chapter, used for identification only.
+
+        content : typing.Optional[ChapterContentInputModel]
+            The chapter content to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.edit_chapter(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "content": convert_and_respect_annotation_metadata(
+                    object_=content, annotation=ChapterContentInputModel, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditChapterResponseModel,
+                    construct_type(
+                        type_=EditChapterResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def add_chapter_to_a_project(
+        self,
+        project_id: str,
+        *,
+        name: str,
+        from_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddChapterResponseModel:
+        """
+        Creates a new chapter either as blank or from a URL.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        name : str
+            The name of the chapter, used for identification only.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.add_chapter_to_a_project(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            name="Chapter 1",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
+            method="POST",
+            json={
+                "name": name,
+                "from_url": from_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AddChapterResponseModel,
+                    construct_type(
+                        type_=AddChapterResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def convert_chapter(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Starts conversion of a specific chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.convert_chapter(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_chapter_snapshots(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ChapterSnapshotsResponse:
+        """
+        Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterSnapshotsResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.list_chapter_snapshots(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChapterSnapshotsResponse,
+                    construct_type(
+                        type_=ChapterSnapshotsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def stream_chapter_audio(
+        self,
+        project_id: str,
+        chapter_id: str,
+        chapter_snapshot_id: str,
+        *,
+        convert_to_mpeg: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        chapter_snapshot_id : str
+            The ID of the chapter snapshot.
+
+        convert_to_mpeg : typing.Optional[bool]
+            Whether to convert the audio to mpeg format.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.stream_chapter_audio(
+            project_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_id="21m00Tcm4TlvDq8ikWAM",
+            chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            method="POST",
+            json={
+                "convert_to_mpeg": convert_to_mpeg,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def update_pronunciation_dictionaries(
         self,
         project_id: str,
         *,
         pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
+        invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -742,10 +1543,13 @@ class ProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
-            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+
+        invalidate_affected_text : typing.Optional[bool]
+            This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -781,6 +1585,7 @@ class ProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+                "invalidate_affected_text": invalidate_affected_text,
             },
             headers={
                 "content-type": "application/json",
@@ -817,7 +1622,148 @@ class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
+    async def create_podcast(
+        self,
+        *,
+        model_id: str,
+        mode: BodyCreatePodcastV1ProjectsPodcastCreatePostMode,
+        source: BodyCreatePodcastV1ProjectsPodcastCreatePostSource,
+        quality_preset: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset] = OMIT,
+        duration_scale: typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale] = OMIT,
+        language: typing.Optional[str] = OMIT,
+        highlights: typing.Optional[typing.Sequence[str]] = OMIT,
+        callback_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PodcastProjectResponseModel:
+        """
+        Create and auto-convert a podcast project. Currently, the LLM cost is covered by us but you will still be charged for the audio generation. In the future, you will be charged for both the LLM and audio generation costs.
+
+        Parameters
+        ----------
+        model_id : str
+            The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
+
+        mode : BodyCreatePodcastV1ProjectsPodcastCreatePostMode
+            The type of podcast to generate
+
+        source : BodyCreatePodcastV1ProjectsPodcastCreatePostSource
+            The source content for the Podcast.
+
+        quality_preset : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostQualityPreset]
+            Output quality of the generated audio. Must be one of:
+            standard - standard output format, 128kbps with 44.1kHz sample rate.
+            high - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side. Using this setting increases the credit cost by 20%.
+            ultra - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side. Using this setting increases the credit cost by 50%.
+            ultra lossless - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format. Using this setting increases the credit cost by 100%.
+
+
+        duration_scale : typing.Optional[BodyCreatePodcastV1ProjectsPodcastCreatePostDurationScale]
+            Duration of the generated podcast. Must be one of:
+            short - produces podcasts shorter than 3 minutes.
+            default - produces podcasts roughly between 3-7 minutes.
+            long - prodces podcasts longer than 7 minutes.
+
+
+        language : typing.Optional[str]
+            An optional language of the Studio project. Two-letter language code (ISO 639-1).
+
+        highlights : typing.Optional[typing.Sequence[str]]
+            A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
+
+        callback_url : typing.Optional[str]
+            A url that will be called by our service when the Studio project is converted. Request will contain a json blob containing the status of the conversion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PodcastProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import (
+            AsyncElevenLabs,
+            PodcastConversationModeData,
+            PodcastTextSource,
+        )
+        from elevenlabs.projects import (
+            BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.create_podcast(
+                model_id="21m00Tcm4TlvDq8ikWAM",
+                mode=BodyCreatePodcastV1ProjectsPodcastCreatePostMode_Conversation(
+                    conversation=PodcastConversationModeData(
+                        host_voice_id="host_voice_id",
+                        guest_voice_id="guest_voice_id",
+                    ),
+                ),
+                source=PodcastTextSource(
+                    text="text",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/projects/podcast/create",
+            method="POST",
+            json={
+                "model_id": model_id,
+                "mode": convert_and_respect_annotation_metadata(
+                    object_=mode, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostMode, direction="write"
+                ),
+                "source": convert_and_respect_annotation_metadata(
+                    object_=source, annotation=BodyCreatePodcastV1ProjectsPodcastCreatePostSource, direction="write"
+                ),
+                "quality_preset": quality_preset,
+                "duration_scale": duration_scale,
+                "language": language,
+                "highlights": highlights,
+                "callback_url": callback_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PodcastProjectResponseModel,
+                    construct_type(
+                        type_=PodcastProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_projects(self, *, request_options: typing.Optional[RequestOptions] = None) -> GetProjectsResponse:
         """
         Returns a list of your projects together and its metadata.
 
@@ -843,7 +1789,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.get_all()
+            await client.projects.get_projects()
 
 
         asyncio.run(main())
@@ -877,7 +1823,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def add(
+    async def add_project(
         self,
         *,
         name: str,
@@ -891,7 +1837,7 @@ class AsyncProjectsClient:
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         genres: typing.Optional[typing.List[str]] = OMIT,
-        target_audience: typing.Optional[ProjectsAddRequestTargetAudience] = OMIT,
+        target_audience: typing.Optional[AddProjectV1ProjectsAddPostRequestTargetAudience] = OMIT,
         language: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         original_publication_date: typing.Optional[str] = OMIT,
@@ -900,8 +1846,10 @@ class AsyncProjectsClient:
         acx_volume_normalization: typing.Optional[bool] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
-        fiction: typing.Optional[ProjectsAddRequestFiction] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
+        fiction: typing.Optional[AddProjectV1ProjectsAddPostRequestFiction] = OMIT,
+        apply_text_normalization: typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        auto_assign_voices: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddProjectResponseModel:
         """
@@ -910,7 +1858,7 @@ class AsyncProjectsClient:
         Parameters
         ----------
         name : str
-            The name of the project, used for identification only.
+            The name of the Studio project, used for identification only.
 
         default_title_voice_id : str
             The voice_id that corresponds to the default voice used for new titles.
@@ -919,10 +1867,10 @@ class AsyncProjectsClient:
             The voice_id that corresponds to the default voice used for new paragraphs.
 
         default_model_id : str
-            The model_id of the model to be used for this project, you can query GET https://api.elevenlabs.io/v1/models to list all available models.
+            The ID of the model to be used for this Studio project, you can query GET /v1/models to list all available models.
 
         from_url : typing.Optional[str]
-            An optional URL from which we will extract content to initialize the project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the project as blank.
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
 
         from_document : typing.Optional[core.File]
             See core.File for more documentation
@@ -936,49 +1884,60 @@ class AsyncProjectsClient:
 
 
         title : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         author : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         description : typing.Optional[str]
-            An optional description of the project.
+            An optional description of the Studio project.
 
         genres : typing.Optional[typing.List[str]]
-            An optional list of genres associated with the project.
+            An optional list of genres associated with the Studio project.
 
-        target_audience : typing.Optional[ProjectsAddRequestTargetAudience]
-            An optional target audience of the project.
+        target_audience : typing.Optional[AddProjectV1ProjectsAddPostRequestTargetAudience]
+            An optional target audience of the Studio project.
 
         language : typing.Optional[str]
-            An optional language of the project. Two-letter language code (ISO 639-1).
+            An optional language of the Studio project. Two-letter language code (ISO 639-1).
 
         content_type : typing.Optional[str]
-            An optional content type of the project.
+            An optional content type of the Studio project.
 
         original_publication_date : typing.Optional[str]
-            An optional original publication date of the project, in the format YYYY-MM-DD or YYYY.
+            An optional original publication date of the Studio project, in the format YYYY-MM-DD or YYYY.
 
         mature_content : typing.Optional[bool]
-            An optional mature content of the project.
+            An optional specification of whether this Studio project contains mature content.
 
         isbn_number : typing.Optional[str]
-            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         acx_volume_normalization : typing.Optional[bool]
-            [Deprecated] When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            [Deprecated] When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         volume_normalization : typing.Optional[bool]
-            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
+            When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         pronunciation_dictionary_locators : typing.Optional[typing.List[str]]
-            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
 
-        fiction : typing.Optional[ProjectsAddRequestFiction]
-            An optional fiction of the project.
+        fiction : typing.Optional[AddProjectV1ProjectsAddPostRequestFiction]
+            An optional specification of whether the content of this Studio project is fiction.
 
-        quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+        apply_text_normalization : typing.Optional[AddProjectV1ProjectsAddPostRequestApplyTextNormalization]
+
+                This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+                When set to 'auto', the system will automatically decide whether to apply text normalization
+                (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+                with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the Studio project to audio or not.
+
+        auto_assign_voices : typing.Optional[bool]
+            [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1000,7 +1959,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.add(
+            await client.projects.add_project(
                 name="name",
                 default_title_voice_id="default_title_voice_id",
                 default_paragraph_voice_id="default_paragraph_voice_id",
@@ -1034,7 +1993,9 @@ class AsyncProjectsClient:
                 "volume_normalization": volume_normalization,
                 "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
                 "fiction": fiction,
-                "quality_check_on": quality_check_on,
+                "apply_text_normalization": apply_text_normalization,
+                "auto_convert": auto_convert,
+                "auto_assign_voices": auto_assign_voices,
             },
             files={
                 "from_document": from_document,
@@ -1066,16 +2027,16 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
+    async def get_project_by_id(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectExtendedResponseModel:
         """
-        Returns information about a specific project. This endpoint returns more detailed information about a project than GET api.elevenlabs.io/v1/projects.
+        Returns information about a specific project. This endpoint returns more detailed information about a project than `GET /v1/projects`.
 
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1097,7 +2058,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.get(
+            await client.projects.get_project_by_id(
                 project_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1144,7 +2105,6 @@ class AsyncProjectsClient:
         author: typing.Optional[str] = OMIT,
         isbn_number: typing.Optional[str] = OMIT,
         volume_normalization: typing.Optional[bool] = OMIT,
-        quality_check_on: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EditProjectResponseModel:
         """
@@ -1153,10 +2113,10 @@ class AsyncProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         name : str
-            The name of the project, used for identification only.
+            The name of the Studio project, used for identification only.
 
         default_title_voice_id : str
             The voice_id that corresponds to the default voice used for new titles.
@@ -1165,19 +2125,16 @@ class AsyncProjectsClient:
             The voice_id that corresponds to the default voice used for new paragraphs.
 
         title : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         author : typing.Optional[str]
-            An optional name of the author of the project, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         isbn_number : typing.Optional[str]
-            An optional ISBN number of the project you want to create, this will be added as metadata to the mp3 file on project / chapter download.
+            An optional ISBN number of the Studio project you want to create, this will be added as metadata to the mp3 file on Studio project or chapter download.
 
         volume_normalization : typing.Optional[bool]
-            When the project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
-
-        quality_check_on : typing.Optional[bool]
-            Whether to run quality check on the generated audio and regenerate if needed. Applies to individual block conversion.
+            When the Studio project is downloaded, should the returned audio have postprocessing in order to make it compliant with audiobook normalized volume requirements
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1201,9 +2158,9 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.edit_basic_project_info(
                 project_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
-                default_title_voice_id="default_title_voice_id",
-                default_paragraph_voice_id="default_paragraph_voice_id",
+                name="Project 1",
+                default_title_voice_id="21m00Tcm4TlvDq8ikWAM",
+                default_paragraph_voice_id="21m00Tcm4TlvDq8ikWAM",
             )
 
 
@@ -1220,7 +2177,6 @@ class AsyncProjectsClient:
                 "author": author,
                 "isbn_number": isbn_number,
                 "volume_normalization": volume_normalization,
-                "quality_check_on": quality_check_on,
             },
             headers={
                 "content-type": "application/json",
@@ -1252,16 +2208,16 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
+    async def delete_project(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
-        Delete a project by its project_id.
+        Deletes a project.
 
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1283,7 +2239,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.delete(
+            await client.projects.delete_project(
                 project_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1319,7 +2275,97 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def convert(
+    async def edit_project_content(
+        self,
+        project_id: str,
+        *,
+        from_url: typing.Optional[str] = OMIT,
+        from_document: typing.Optional[core.File] = OMIT,
+        auto_convert: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditProjectResponseModel:
+        """
+        Edits project content.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+
+        from_document : typing.Optional[core.File]
+            See core.File for more documentation
+
+        auto_convert : typing.Optional[bool]
+            Whether to auto convert the Studio project to audio or not.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditProjectResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.edit_project_content(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/content",
+            method="POST",
+            data={
+                "from_url": from_url,
+                "auto_convert": auto_convert,
+            },
+            files={
+                "from_document": from_document,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditProjectResponseModel,
+                    construct_type(
+                        type_=EditProjectResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def convert_project(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Optional[typing.Any]:
         """
@@ -1328,7 +2374,7 @@ class AsyncProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1350,7 +2396,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.convert(
+            await client.projects.convert_project(
                 project_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1386,7 +2432,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_snapshots(
+    async def get_project_snapshots(
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectSnapshotsResponse:
         """
@@ -1395,7 +2441,7 @@ class AsyncProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1417,7 +2463,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.get_snapshots(
+            await client.projects.get_project_snapshots(
                 project_id="21m00Tcm4TlvDq8ikWAM",
             )
 
@@ -1453,7 +2499,7 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def stream_audio(
+    async def stream_project_audio(
         self,
         project_id: str,
         project_snapshot_id: str,
@@ -1467,10 +2513,10 @@ class AsyncProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         project_snapshot_id : str
-            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+            The ID of the Studio project snapshot.
 
         convert_to_mpeg : typing.Optional[bool]
             Whether to convert the audio to mpeg format.
@@ -1517,7 +2563,7 @@ class AsyncProjectsClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def stream_archive(
+    async def streams_archive_with_project_audio(
         self, project_id: str, project_snapshot_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -1526,10 +2572,10 @@ class AsyncProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         project_snapshot_id : str
-            The project_snapshot_id of the project snapshot. You can query GET /v1/projects/{project_id}/snapshots to list all available snapshots for a project.
+            The ID of the Studio project snapshot.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1550,7 +2596,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.stream_archive(
+            await client.projects.streams_archive_with_project_audio(
                 project_id="21m00Tcm4TlvDq8ikWAM",
                 project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
             )
@@ -1581,11 +2627,627 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def get_chapters(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetChaptersResponse:
+        """
+        Returns a list of your chapters for a project together and its metadata.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetChaptersResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.get_chapters(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    GetChaptersResponse,
+                    construct_type(
+                        type_=GetChaptersResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_chapter_by_id(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ChapterWithContentResponseModel:
+        """
+        Returns information about a specific chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterWithContentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.get_chapter_by_id(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChapterWithContentResponseModel,
+                    construct_type(
+                        type_=ChapterWithContentResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_chapter(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Deletes a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.delete_chapter(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def edit_chapter(
+        self,
+        project_id: str,
+        chapter_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        content: typing.Optional[ChapterContentInputModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditChapterResponseModel:
+        """
+        Edits a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        name : typing.Optional[str]
+            The name of the chapter, used for identification only.
+
+        content : typing.Optional[ChapterContentInputModel]
+            The chapter content to use.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.edit_chapter(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}",
+            method="PATCH",
+            json={
+                "name": name,
+                "content": convert_and_respect_annotation_metadata(
+                    object_=content, annotation=ChapterContentInputModel, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    EditChapterResponseModel,
+                    construct_type(
+                        type_=EditChapterResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def add_chapter_to_a_project(
+        self,
+        project_id: str,
+        *,
+        name: str,
+        from_url: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AddChapterResponseModel:
+        """
+        Creates a new chapter either as blank or from a URL.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        name : str
+            The name of the chapter, used for identification only.
+
+        from_url : typing.Optional[str]
+            An optional URL from which we will extract content to initialize the Studio project. If this is set, 'from_url' must be null. If neither 'from_url' or 'from_document' are provided we will initialize the Studio project as blank.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AddChapterResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.add_chapter_to_a_project(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                name="Chapter 1",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/add",
+            method="POST",
+            json={
+                "name": name,
+                "from_url": from_url,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AddChapterResponseModel,
+                    construct_type(
+                        type_=AddChapterResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def convert_chapter(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[typing.Any]:
+        """
+        Starts conversion of a specific chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.convert_chapter(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/convert",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_chapter_snapshots(
+        self, project_id: str, chapter_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ChapterSnapshotsResponse:
+        """
+        Gets information about all the snapshots of a chapter, each snapshot corresponds can be downloaded as audio. Whenever a chapter is converted a snapshot will be automatically created.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ChapterSnapshotsResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.list_chapter_snapshots(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ChapterSnapshotsResponse,
+                    construct_type(
+                        type_=ChapterSnapshotsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def stream_chapter_audio(
+        self,
+        project_id: str,
+        chapter_id: str,
+        chapter_snapshot_id: str,
+        *,
+        convert_to_mpeg: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Stream the audio from a chapter snapshot. Use `GET /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the chapter snapshots of a chapter.
+
+        Parameters
+        ----------
+        project_id : str
+            The ID of the Studio project.
+
+        chapter_id : str
+            The ID of the chapter.
+
+        chapter_snapshot_id : str
+            The ID of the chapter snapshot.
+
+        convert_to_mpeg : typing.Optional[bool]
+            Whether to convert the audio to mpeg format.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.stream_chapter_audio(
+                project_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_id="21m00Tcm4TlvDq8ikWAM",
+                chapter_snapshot_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/chapters/{jsonable_encoder(chapter_id)}/snapshots/{jsonable_encoder(chapter_snapshot_id)}/stream",
+            method="POST",
+            json={
+                "convert_to_mpeg": convert_to_mpeg,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    typing.cast(
+                        HttpValidationError,
+                        construct_type(
+                            type_=HttpValidationError,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def update_pronunciation_dictionaries(
         self,
         project_id: str,
         *,
         pronunciation_dictionary_locators: typing.Sequence[PronunciationDictionaryVersionLocator],
+        invalidate_affected_text: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[typing.Any]:
         """
@@ -1594,10 +3256,13 @@ class AsyncProjectsClient:
         Parameters
         ----------
         project_id : str
-            The project_id of the project, you can query GET https://api.elevenlabs.io/v1/projects to list all available projects.
+            The ID of the Studio project.
 
         pronunciation_dictionary_locators : typing.Sequence[PronunciationDictionaryVersionLocator]
-            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text.  A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+            A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'. Note that multiple dictionaries are not currently supported by our UI which will only show the first.
+
+        invalidate_affected_text : typing.Optional[bool]
+            This will automatically mark text in this project for reconversion when the new dictionary applies or the old one no longer does.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1641,6 +3306,7 @@ class AsyncProjectsClient:
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
                     direction="write",
                 ),
+                "invalidate_affected_text": invalidate_affected_text,
             },
             headers={
                 "content-type": "application/json",
