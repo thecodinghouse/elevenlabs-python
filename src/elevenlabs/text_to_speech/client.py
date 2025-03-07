@@ -62,7 +62,7 @@ class TextToSpeechClient:
             BodyTextToSpeechV1TextToSpeechVoiceIdPostApplyTextNormalization
         ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> typing.Tuple[bytes, typing.Optional[str]]:
         """
         Converts text into speech using a voice of your choice and returns audio.
 

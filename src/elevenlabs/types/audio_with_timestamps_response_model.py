@@ -10,6 +10,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AudioWithTimestampsResponseModel(UncheckedBaseModel):
+    request_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The request ID of the API call
+    """
     audio_base_64: typing_extensions.Annotated[str, FieldMetadata(alias="audio_base64")] = pydantic.Field()
     """
     Base64 encoded audio data
