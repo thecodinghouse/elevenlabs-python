@@ -8,37 +8,41 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/v/elevenlabs?style=flat&colorA=black&colorB=black)](https://pypi.org/project/elevenlabs/)
 [![Downloads](https://static.pepy.tech/personalized-badge/elevenlabs?period=total&units=international_system&left_color=black&right_color=black&left_text=Downloads)](https://pepy.tech/project/elevenlabs)
 
-The official Python API for [ElevenLabs](https://elevenlabs.io/) [text-to-speech software.](https://elevenlabs.io/text-to-speech) Eleven brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
+The official Python SDK for [ElevenLabs](https://elevenlabs.io/). ElevenLabs brings the most compelling, rich and lifelike voices to creators and developers in just a few lines of code.
 
 ## 📖 API & Docs
 
 Check out the [HTTP API documentation](https://elevenlabs.io/docs/api-reference).
 
-## ⚙️ Install
+## Install
 
 ```bash
 pip install elevenlabs
 ```
 
-## 🗣️ Usage
-
-[![Open in Spaces](https://img.shields.io/badge/🤗-Open%20in%20Spaces-blue.svg)](https://huggingface.co/spaces/elevenlabs/tts)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/gist/flavioschneider/49468d728a816c6538fd2f56b3b50b96/elevenlabs-python.ipynb)
+## Usage
 
 ### Main Models
 
 1. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
 
-   - Excels in stability, language diversity, and accent accuracy
-   - Supports 29 languages
-   - Recommended for most use cases
+    - Excels in stability, language diversity, and accent accuracy
+    - Supports 29 languages
+    - Recommended for most use cases
+
+2. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
+
+    - Ultra-low latency
+    - Supports 32 languages
+    - Faster model, 50% lower price per character
 
 2. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
-   - High quality, lowest latency
-   - Ideal for developer use cases where speed is crucial
-   - Supports 32 languages
 
-For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/speech-synthesis/models).
+    - Good balance of quality and latency
+    - Ideal for developer use cases where speed is crucial
+    - Supports 32 languages
+
+For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/models).
 
 ```py
 from dotenv import load_dotenv
@@ -65,7 +69,7 @@ play(audio)
 
 </details>
 
-## 🗣️ Voices
+## Voices
 
 List all your available voices with `voices()`.
 
@@ -76,7 +80,7 @@ client = ElevenLabs(
   api_key="YOUR_API_KEY",
 )
 
-response = client.voices.get_all()
+response = client.voices.search()
 print(response.voices)
 ```
 
@@ -96,17 +100,17 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs import play
 
 client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults ELEVENLABS_API_KEY
+  api_key="YOUR_API_KEY",
 )
 
-voice = client.clone(
+voice = client.voices.ivc.create(
     name="Alex",
     description="An old American male voice with a slight hoarseness in his throat. Perfect for news", # Optional
     files=["./sample_0.mp3", "./sample_1.mp3", "./sample_2.mp3"],
 )
 ```
 
-## 🚿 Streaming
+## Streaming
 
 Stream audio in real-time, as it's being generated.
 
@@ -116,7 +120,7 @@ from elevenlabs.client import ElevenLabs
 
 client = ElevenLabs()
 
-audio_stream = client.text_to_speech.convert_as_stream(
+audio_stream = client.text_to_speech.stream(
     text="This is a test",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     model_id="eleven_multilingual_v2"
@@ -132,32 +136,6 @@ for chunk in audio_stream:
 
 ```
 
-### Input streaming
-
-Stream text chunks into audio as it's being generated, with <1s latency. Note: if chunks don't end with space or punctuation (" ", ".", "?", "!"), the stream will wait for more text.
-
-```py
-from elevenlabs.client import ElevenLabs
-from elevenlabs import stream
-
-client = ElevenLabs(
-  api_key="YOUR_API_KEY", # Defaults to ELEVENLABS_API_KEY
-)
-
-def text_stream():
-    yield "Hi there, I'm Eleven "
-    yield "I'm a text to speech API "
-
-audio_stream = client.generate(
-    text=text_stream(),
-    voice="Brian",
-    model="eleven_multilingual_v2",
-    stream=True
-)
-
-stream(audio_stream)
-```
-
 ## Async Client
 
 Use `AsyncElevenLabs` if you want to make API calls asynchronously.
@@ -168,11 +146,11 @@ import asyncio
 from elevenlabs.client import AsyncElevenLabs
 
 eleven = AsyncElevenLabs(
-  api_key="MY_API_KEY" # Defaults to ELEVENLABS_API_KEY
+  api_key="MY_API_KEY"
 )
 
 async def print_models() -> None:
-    models = await eleven.models.get_all()
+    models = await eleven.models.list()
     print(models)
 
 asyncio.run(print_models())
@@ -180,9 +158,7 @@ asyncio.run(print_models())
 
 ## Languages Supported
 
-We support 32 languages and 100+ accents. Explore [all languages](https://elevenlabs.io/languages).
-
-<img src="https://github.com/elevenlabs/elevenlabs-js/blob/main/assets/languages.png" width="900">
+Explore [all models & languages](https://elevenlabs.io/docs/models).
 
 ## Contributing
 

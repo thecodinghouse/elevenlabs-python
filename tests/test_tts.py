@@ -7,47 +7,6 @@ from .utils import IN_GITHUB, DEFAULT_TEXT, DEFAULT_VOICE, DEFAULT_MODEL
 import base64
 
 
-def test_tts_generate() -> None:
-    """Test basic text-to-speech generation w/ custom generate."""
-    client = ElevenLabs()
-    audio_generator = client.generate(text=DEFAULT_TEXT, voice="Brian", model=DEFAULT_MODEL)
-    audio = b"".join(audio_generator)
-    assert isinstance(audio, bytes), "TTS should return bytes"
-    if not IN_GITHUB:
-        play(audio)
-
-
-def test_tts_generate_with_voice_settings() -> None:
-    """Test basic text-to-speech generation."""
-    client = ElevenLabs()
-    audio_generator = client.generate(
-        text=DEFAULT_TEXT,
-        model=DEFAULT_MODEL,
-        voice=Voice(
-            voice_id="nPczCjzI2devNBz1zQrb",
-            settings=VoiceSettings(stability=0.71, similarity_boost=0.5, style=0.0, use_speaker_boost=True),
-        ),
-    )
-    audio = b"".join(audio_generator)
-    assert isinstance(audio, bytes), "TTS should return bytes"
-    if not IN_GITHUB:
-        play(audio)
-
-
-def test_tts_generate_stream() -> None:
-    """Test streaming text-to-speech generation."""
-    client = ElevenLabs()
-    audio_generator = client.generate(
-        stream=True,
-        text=DEFAULT_TEXT,
-        model=DEFAULT_MODEL,
-    )
-    audio = b"".join(audio_generator)
-    assert isinstance(audio, bytes), "TTS should return bytes"
-    if not IN_GITHUB:
-        play(audio)
-
-
 def test_tts_convert() -> None:
     """Test basic text-to-speech generation."""
     client = ElevenLabs()
@@ -76,7 +35,7 @@ def test_tts_convert_with_voice_settings() -> None:
 def test_tts_convert_as_stream():
     async def main():
         async_client = AsyncElevenLabs()
-        results = async_client.text_to_speech.convert_as_stream(
+        results = async_client.text_to_speech.stream(
             text=DEFAULT_TEXT, voice_id=DEFAULT_VOICE, model_id=DEFAULT_MODEL
         )
         out = b""
